@@ -1,15 +1,111 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Quest/Task/Task", fileName = "Task")]
+public enum TaskState
+{
+    Inactive,
+    Running,
+    Complete
+}
+
+[CreateAssetMenu(menuName = "Quest/Task/Task", fileName = "Task_")]
 public class Task : ScriptableObject
 {
+    public delegate void StateChangedHandler(Task task, TaskState currentState, TaskState prevState);
+    public delegate void SuccessChangedHandler(Task task, int currentSuccess, int prevstate);
+
+    [SerializeField]
+    private Category _category;
+
     [Header("Text")]
-    [SerializeField] private string _codeName; //ìŠ¤í¬ë¦½íŠ¸ êµ¬ë³„ ìš©ë„
-    [SerializeField] private string _description; //í€˜ìŠ¤íŠ¸ ì„¤ëª…
+    [SerializeField]
+    private string _codeName;
+    [SerializeField]
+    private string _description;
+
+    [Header("Action")]
+    [SerializeField]
+    private TaskAction _action;
+
+    [Header("Target")]
+    [SerializeField]
+    private TaskTarget[] _targets;
 
     [Header("Setting")]
-    [SerializeField] private int _needSuccessToComplete; //ì„±ê³µê¹Œì§€ í•„ìš”í•œ íšŸìˆ˜
+    [SerializeField]
+    private InitialSuccessValue _initialSuccessValue; //ÃÊ±â ¼º°ø°ª
+    [SerializeField]
+    private int _needSuccessToComplete; //¼º°ø±îÁö ÇÊ¿äÇÑ È½¼ö
+    [SerializeField]
+    private bool _canRecevieReportDuringCompletion; //¼º°øÇÑ ÈÄ¿¡µµ °è¼Ó ¼º°ø°ªÀ» ¹ÞÀ»°ÍÀÌ³Ä
 
+    private TaskState _taskState;
+    private int _currentSuccess;
+
+    public event StateChangedHandler onStateChanged;
+    public event SuccessChangedHandler onSuccessChanged;
+
+    public int CurrentSuccess
+    {
+        get => _currentSuccess;
+        set
+        {
+            int prevSuccess = _currentSuccess;
+            _currentSuccess = Mathf.Clamp(value, 0, _needSuccessToComplete);
+            if (_currentSuccess != prevSuccess)
+            {
+                State = _currentSuccess == _needSuccessToComplete ? TaskState.Complete : TaskState.Running;
+                onSuccessChanged?.Invoke(this, _currentSuccess, prevSuccess);
+            }
+        }
+    }
+    public Category Category => _category;
+    public string CodeName => _codeName;
+    public string Description => _description;
+    public int NeedSuccessToComplete => _needSuccessToComplete;
+    public TaskState State
+    {
+        get => _taskState;
+        set
+        {
+            var prevState = _taskState;
+            _taskState = value;
+            onStateChanged?.Invoke(this, _taskState, prevState);
+        }
+    }
+    public bool IsComplete => State == TaskState.Complete;
+    public Quest Owner { get; private set; }
+     
+    public void Setup(Quest owner)
+    {
+        Owner = owner;
+    }
+
+    public void Start()
+    {
+        State = TaskState.Running;
+        if (_initialSuccessValue)
+            CurrentSuccess = _initialSuccessValue.GetValue(this);
+    }
+
+    public void End()
+    {
+        onStateChanged = null;
+        onSuccessChanged = null;
+    }
+    
+    public void ReceieveReport(int successCount)
+    {
+        CurrentSuccess = _action.Run(this, CurrentSuccess, successCount);
+    }
+
+    public void Complete()
+    {
+        CurrentSuccess = _needSuccessToComplete;
+    }
+
+    public bool IsTarget(string category, object target)
+        => Category == category &&
+        _targets.Any(x => x.IsEqual(target)) &&
+        (!IsComplete || (IsComplete && _canRecevieReportDuringCompletion));
 }
