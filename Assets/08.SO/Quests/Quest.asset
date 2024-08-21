@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e68c0f20449394096ed83e82ec8415, type: 3}
   m_Name: Quest
   m_EditorClassIdentifier: 
-  _category: {fileID: 0}
+  _category: {fileID: 11400000, guid: 1ea53f1902bb343409f4611c4a00fa3b, type: 2}
   _icon: {fileID: 0}
-  _codeName: 
-  _displayname: 
+  _codeName: 0
+  _displayname: Test_Quest
   _description: 
   _taskGroups:
   - _tasks:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 560dffa6faa7d4eccbc0f4e287137dd1, type: 2}
   _acceptCondition: {fileID: 0}
-  _rewards: []
-  _useAutoComplete: 0
+  _rewards:
+  - {fileID: 0}
+  _useAutoComplete: 1
   _isCancelable: 0

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
+using System.Linq;
 
 public enum QuestState
 {
@@ -42,6 +43,7 @@ public class Quest : ScriptableObject
     [Header("Option")]
     [SerializeField] private bool _useAutoComplete;
     [SerializeField] private bool _isCancelable;
+    [SerializeField] private bool _isSavable;
 
     private int _currentTaskGroupIndex;
 
@@ -60,6 +62,7 @@ public class Quest : ScriptableObject
     public bool IsCancel => State == QuestState.Cancel;
     public virtual bool IsCancelable => _isCancelable;
     public bool IsAcceptable => _acceptCondition.IsPrepared(this);
+    public virtual bool IsSavable => _isSavable;
 
     public event TaskSuccessChangedHandler onTaskSuccessChanged;
     public event CompletedHandler onCompleted;
@@ -72,7 +75,7 @@ public class Quest : ScriptableObject
     public void OnRegister()
     {
         Debug.Assert(!IsRegistered, "This quest has already been registered"); //Assert 코드는 디버깅이지만 빌드를 하면 자동으로 삭제되어 유용하다.
-
+       
         foreach (var TaskGroup in _taskGroups)
         {
            TaskGroup.Setup(this);
@@ -83,8 +86,7 @@ public class Quest : ScriptableObject
 
     public void ReceieveReport(string category, object target, int successCount)
     {
-        Debug.Assert(IsRegistered, "This quest has already been registered");
-        Debug.Assert(!IsCancel, "This quest has been cancled");
+        CheckIsRunning();
 
         if (IsComplete)
             return;
@@ -115,6 +117,8 @@ public class Quest : ScriptableObject
     {
         CheckIsRunning();
 
+        Debug.Log("퀘스트 완료됨");
+
         foreach (var taskGroup in _taskGroups)
             taskGroup.Complete();
 
@@ -136,6 +140,44 @@ public class Quest : ScriptableObject
 
         State = QuestState.Cancel;
         onCanceled?.Invoke(this);
+    }
+
+    public Quest Clone()
+    {
+        var clone = Instantiate(this);
+        clone._taskGroups = _taskGroups.Select(x => new TaskGroup(x)).ToArray();
+
+        return clone;
+    }
+
+    public QuestSaveData ToSaveData()
+    {
+        return new QuestSaveData
+        {
+            codeName = _codeName,
+            state = State,
+            taskGroupIndex = _currentTaskGroupIndex,
+            taskSuccessCounts = CurrentTaskGroup.Tasks.Select(x => x.CurrentSuccess).ToArray()
+        };
+    }
+
+    public void LoadFrom(QuestSaveData saveData)
+    {
+        State = saveData.state;
+        _currentTaskGroupIndex = saveData.taskGroupIndex;
+
+        for (int i = 0; i < _currentTaskGroupIndex; i++)
+        {
+            var taskGroup = _taskGroups[i];
+            taskGroup.Start();
+            taskGroup.Complete();
+        }
+
+        for (int i = 0; i < saveData.taskSuccessCounts.Length; i++)
+        {
+            CurrentTaskGroup.Start();
+            CurrentTaskGroup.Tasks[i].CurrentSuccess = saveData.taskSuccessCounts[i];
+        }
     }
 
     private void OnSuccessChanged(Task task, int currentSuccess, int prevSuccess)

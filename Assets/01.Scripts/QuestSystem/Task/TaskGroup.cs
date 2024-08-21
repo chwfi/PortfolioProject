@@ -15,7 +15,7 @@ public enum TaskGroupState
 public class TaskGroup
 {
     [SerializeField]
-    private Task[] _tasks; //TaskµéÀ» ¹ÞÀ½
+    private Task[] _tasks; //Taskï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public IReadOnlyList<Task> Tasks => _tasks;
     public Quest Owner { get; private set; } 
@@ -23,7 +23,12 @@ public class TaskGroup
     public bool IsComplete => State == TaskGroupState.Complete;
     public TaskGroupState State { get; private set; }
 
-    public void Setup(Quest owner) //¼ÒÀ¯ÁÖ ¼¼ÆÃ
+    public TaskGroup(TaskGroup copyTarget)
+    {
+        _tasks = copyTarget.Tasks.Select(x => Object.Instantiate(x)).ToArray();
+    }
+
+    public void Setup(Quest owner) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         Owner = owner;
         foreach (var task in _tasks)

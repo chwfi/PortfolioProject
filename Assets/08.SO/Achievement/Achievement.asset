@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fb2badb9cdc4169b8c58282d0b14de, type: 3}
   m_Name: Achievement
   m_EditorClassIdentifier: 
-  _category: {fileID: 0}
+  _category: {fileID: 11400000, guid: 1ea53f1902bb343409f4611c4a00fa3b, type: 2}
   _icon: {fileID: 0}
-  _codeName: 
+  _codeName: 0
   _displayname: 
   _description: 
-  _taskGroups: []
+  _taskGroups:
+  - _tasks:
+    - {fileID: 11400000, guid: 560dffa6faa7d4eccbc0f4e287137dd1, type: 2}
   _acceptCondition: {fileID: 0}
   _rewards: []
-  _useAutoComplete: 0
+  _useAutoComplete: 1
   _isCancelable: 0

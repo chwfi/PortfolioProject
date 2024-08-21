@@ -14,30 +14,22 @@ public class Task : ScriptableObject
     public delegate void StateChangedHandler(Task task, TaskState currentState, TaskState prevState);
     public delegate void SuccessChangedHandler(Task task, int currentSuccess, int prevstate);
 
-    [SerializeField]
-    private Category _category;
+    [SerializeField] private Category _category;
 
     [Header("Text")]
-    [SerializeField]
-    private string _codeName;
-    [SerializeField]
-    private string _description;
+    [SerializeField] private string _codeName;
+    [SerializeField] private string _description;
 
     [Header("Action")]
-    [SerializeField]
-    private TaskAction _action;
+    [SerializeField] private TaskAction _action;
 
     [Header("Target")]
-    [SerializeField]
-    private TaskTarget[] _targets;
+    [SerializeField] private TaskTarget[] _targets;
 
     [Header("Setting")]
-    [SerializeField]
-    private InitialSuccessValue _initialSuccessValue; //ÃÊ±â ¼º°ø°ª
-    [SerializeField]
-    private int _needSuccessToComplete; //¼º°ø±îÁö ÇÊ¿äÇÑ È½¼ö
-    [SerializeField]
-    private bool _canRecevieReportDuringCompletion; //¼º°øÇÑ ÈÄ¿¡µµ °è¼Ó ¼º°ø°ªÀ» ¹ÞÀ»°ÍÀÌ³Ä
+    [SerializeField] private InitialSuccessValue _initialSuccessValue; //ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private int _needSuccessToComplete; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ È½ï¿½ï¿½
+    [SerializeField] private bool _canRecevieReportDuringCompletion; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½
 
     private TaskState _taskState;
     private int _currentSuccess;
@@ -86,6 +78,8 @@ public class Task : ScriptableObject
         State = TaskState.Running;
         if (_initialSuccessValue)
             CurrentSuccess = _initialSuccessValue.GetValue(this);
+        else
+            CurrentSuccess = 0;
     }
 
     public void End()
