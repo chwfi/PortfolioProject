@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
 
-public class UI_Button : UI_Base, IPointerClickHandler
+public abstract class UI_Button : UI_Base, IPointerClickHandler
 {
     protected Button _button;
     protected Action _buttonEvent;
@@ -29,9 +29,12 @@ public class UI_Button : UI_Base, IPointerClickHandler
     protected virtual void Awake()
     {
         _button = GetComponent<Button>();
-
         _ownerPopup = FindObjectUtil.FindParent<UI_Popup>(this.gameObject);
+        
+        _buttonEvent += SetButtonEvent;
     }
+
+    public abstract void SetButtonEvent();
 
     public void OnPointerClick(PointerEventData eventData)
     {

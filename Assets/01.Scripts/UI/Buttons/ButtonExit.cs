@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class ButtonExit : UI_Button
 {
+    public override void SetButtonEvent()
+    {
+        OwnerPopup.AccessUI(false);
+    }
+
     protected override void Awake()
     {
         base.Awake();
-
-        _buttonEvent += SetEvent;
-    }
-
-    private void SetEvent()
-    {
-        OwnerPopup.AccessUI(false);
     }
 }

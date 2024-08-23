@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Util;
 
-public class UI_Popup : UI_Base
+public abstract class UI_Popup : UI_Base
 {
     [Header("UI_Fade")]
     [SerializeField] private float _fadeDealy = 0f;
@@ -13,7 +13,8 @@ public class UI_Popup : UI_Base
     protected CanvasGroup _canvasGroup;
     protected List<UI_Button> _buttonList = new();
 
-    private void Awake()
+
+    public virtual void Awake()
     {
         if (TryGetComponent(out CanvasGroup canvasGroup))
             _canvasGroup = canvasGroup;

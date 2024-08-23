@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf0bb7f0ce0046bd9b6be417ddd0197, type: 3}
+  m_Name: MainQuest
+  m_EditorClassIdentifier: 
+  _codeName: Quest
+  _binderCodeName: "\u3141\u3147\u3134\u3139\u3141"
+  _questName: TestQuest
+  _questIcon: {fileID: 0}
+  _questDescription: Its just test
+  _taskGroup:
+    _tasks:
+    - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
+  _rewards: []
+  _isAutoComplete: 1
+  _isCanclable: 1
+  _isSavable: 0
