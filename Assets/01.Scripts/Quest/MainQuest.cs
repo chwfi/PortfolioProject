@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainQuest : MonoBehaviour
+public class QuestTester : MonoBehaviour
 {
-    [SerializeField] private Quest _quest;
+    [SerializeField] private Quest[] _quests;
     [SerializeField] private TaskTarget _target;
 
     private void Start() 
@@ -23,7 +23,10 @@ public class MainQuest : MonoBehaviour
             Debug.Log($"Completed Quests Count: {questSystem.CompletedQuests.Count}");
         };
 
-        var newQuest = questSystem.Register(_quest);
+        for (int i = 0; i < _quests.Length; i++)
+        {
+            var newQuest = questSystem.Register(_quests[i]);
+        }
     }
 
     private void Update() {

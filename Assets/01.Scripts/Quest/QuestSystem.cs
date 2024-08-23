@@ -65,8 +65,8 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
             activeAchievements.Add(newQuest);
 
-            newQuest.OnRegister();
             OnAchievementRegistered?.Invoke(newQuest);
+            newQuest.OnRegister();
         }
         else
         {

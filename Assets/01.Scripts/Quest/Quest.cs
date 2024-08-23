@@ -20,10 +20,8 @@ public class Quest : ScriptableObject
     public delegate void CanceldHandler(Quest quest);
     public delegate void UpdateUIHandler(Quest quest);
 
-    [SerializeField] private string _codeName;
-
     [Header("Info")]
-    [SerializeField] private string _binderCodeName;
+    [SerializeField] private string _codeName;
     [SerializeField] private string _questName;
     [SerializeField] private Sprite _questIcon;
     [SerializeField] private string _questDescription;
@@ -41,7 +39,6 @@ public class Quest : ScriptableObject
 
     public event CompletedHandler OnCompleted;
     public event CanceldHandler OnCanceled;
-    public Guid id = Guid.NewGuid();
     public event UpdateUIHandler OnUIUpdate;
 
     public TaskGroup TaskGroup => _taskGroup;
@@ -56,7 +53,6 @@ public class Quest : ScriptableObject
             OnUIUpdate?.Invoke(this);
         }
     }
-    public string BinderCodeName => _binderCodeName;
     public string QuestName => _questName;
     public Sprite QuestIcon => _questIcon;
     public string QuestDescription => _questDescription;

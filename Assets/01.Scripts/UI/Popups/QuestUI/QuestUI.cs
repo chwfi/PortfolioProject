@@ -9,17 +9,17 @@ public abstract class QuestUI : UI_Popup
     [SerializeField] protected string _codename;
     [SerializeField] protected TextMeshProUGUI _questNameText;
     [SerializeField] protected TextMeshProUGUI _questDescriptionText;
-    [SerializeField] protected TextMeshProUGUI _questTaskCountText;
-
-    public Quest Quest;
+    [SerializeField] protected TextMeshProUGUI _questStateText;
+    [SerializeField] protected TaskSuccessCountText _taskSuccessCountText;
+    protected Transform _countGroupTrm;
 
     public string CodeName => _codename;
-    public TextMeshProUGUI QuestNameText => _questNameText;
-    public TextMeshProUGUI QuestDescription => _questDescriptionText;
 
     public override void Awake()
     {
         base.Awake();
+
+        _countGroupTrm = transform.Find("SuccessCountLayoutGroup").transform;
     }
 
     public abstract void UpdateUI(Quest binder);

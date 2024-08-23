@@ -5,14 +5,15 @@ using System.Linq;
 
 public class QuestBindingManager : MonoSingleton<QuestBindingManager>
 {
-    [SerializeField] private PopupUIController popupUIController;
+    private PopupUIController _questUIController;
     private List<QuestUI> _uiList = new();
 
     private void Awake() {
         var questSystem = QuestSystem.Instance;
         questSystem.OnQuestRegistered += SetQuestDictionary;
 
-        _uiList.AddRange(popupUIController.transform.GetComponentsInChildren<QuestUI>());
+        _questUIController = FindObjectOfType<PopupUIController>();
+        _uiList.AddRange(_questUIController.transform.GetComponentsInChildren<QuestUI>());
     }
 
     private void SetQuestDictionary(Quest quest) 

@@ -34,6 +34,7 @@ public class Task : ScriptableObject
         get => _currentSuccessValue;
         set => _currentSuccessValue = value;
     }
+    public int NeedToSuccessValue => _needToSuccessValue;
     public TaskState TaskState
     {
         get => _taskState;
