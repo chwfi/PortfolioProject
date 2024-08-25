@@ -5,7 +5,6 @@ using UnityEngine;
 public class QuestInfoUI : QuestUI
 {
     private List<TaskSuccessCountText> _taskSuccessCountTexts = new();
-    private Dictionary<TaskSuccessCountText, Task> _taskDataDictionary = new();
 
     public override void Awake()
     {
@@ -21,18 +20,17 @@ public class QuestInfoUI : QuestUI
     {
         if (binder.State == QuestState.Inactive)
         {
-            foreach (var task in binder.TaskGroup.Tasks)
+            foreach (var task in binder.TaskGroup)
             {
                 TaskSuccessCountText txt = Instantiate(_taskSuccessCountText, _countGroupTrm);
+                txt.OwnTask = task;
                 _taskSuccessCountTexts.Add(txt);
-                _taskDataDictionary.Add(txt, task);
             }
         }
 
         foreach (var txt in _taskSuccessCountTexts)
         {
-            _taskDataDictionary.TryGetValue(txt, out Task task);
-            txt.UpdateText(task.CurrentSuccessValue, task.NeedToSuccessValue);
+            txt.UpdateText();
         }
 
         _questNameText.text = binder.QuestName;

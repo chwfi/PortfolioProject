@@ -4,14 +4,15 @@ using UnityEngine;
 public class TaskSuccessCountText : MonoBehaviour
 {
     private TextMeshProUGUI _countText;
+    public Task OwnTask;
 
     private void OnEnable() 
     {
         _countText = GetComponent<TextMeshProUGUI>();    
     }
 
-    public void UpdateText(int current, int need)
+    public void UpdateText()
     {
-        _countText.text = $"{current} / {need}";
+        _countText.text = $"{OwnTask.CurrentSuccessValue} / {OwnTask.NeedToSuccessValue}";
     }
 }

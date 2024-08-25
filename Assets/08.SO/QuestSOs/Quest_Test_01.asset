@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Quest_Test_01
   m_EditorClassIdentifier: 
   _codeName: Quest
-  _binderCodeName: "\u3141\u3147\u3134\u3139\u3141"
-  _questName: TestQuest
+  _questName: Kill 5 Goblins
   _questIcon: {fileID: 0}
-  _questDescription: Its just test
+  _questDescription: Kill them!!
   _taskGroup:
-    _tasks:
-    - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
+  - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
   _rewards: []
+  _isAutoStartQuest: 1
   _isAutoComplete: 1
   _isCanclable: 1
   _isSavable: 0

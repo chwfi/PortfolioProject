@@ -65,10 +65,14 @@ public class Task : ScriptableObject
         OnStateChanged = null;
     }
     
-    public void ReceieveReport(int successCount)
+    public void ReceieveReport(object target, int successCount, Quest quest)
     {
+        if (quest.CodeName != Owner.CodeName) return;
+        if (!_taskTarget.IsTargetEqual(target)) return;
+        if (TaskState == TaskState.Complete) return;
+
         _currentSuccessValue += successCount;
-            Debug.Log(_currentSuccessValue);
+        Debug.Log(_currentSuccessValue);
 
         if (_currentSuccessValue >= _needToSuccessValue)
         {

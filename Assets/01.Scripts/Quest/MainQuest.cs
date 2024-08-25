@@ -5,7 +5,6 @@ using UnityEngine;
 public class QuestTester : MonoBehaviour
 {
     [SerializeField] private Quest[] _quests;
-    [SerializeField] private TaskTarget _target;
 
     private void Start() 
     {
@@ -26,13 +25,6 @@ public class QuestTester : MonoBehaviour
         for (int i = 0; i < _quests.Length; i++)
         {
             var newQuest = questSystem.Register(_quests[i]);
-        }
-    }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            QuestSystem.Instance.Report(_target, 1);
         }
     }
 }

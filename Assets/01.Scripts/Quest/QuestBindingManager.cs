@@ -21,7 +21,9 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
         foreach (var ui in _uiList)
         {
             if (ui.CodeName == quest.CodeName)
+            {
                 quest.OnUIUpdate += ui.UpdateUI;
+            }
         }
     }
 }

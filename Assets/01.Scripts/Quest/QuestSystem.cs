@@ -19,6 +19,9 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public delegate void QuestRegisteredHandler(Quest newQuest);
     public delegate void QuestCompletedHandler(Quest quest);
     public delegate void QuestCanceledHandler(Quest quest);
+    public delegate void QuestRecieveHandler(object target, int successCount);
+    public delegate void CheckCompleteHandler();
+    public delegate void QuestUpdateUIHandler();
     #endregion
 
     private List<Quest> activeQuests = new();
@@ -37,19 +40,23 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public event QuestRegisteredHandler OnAchievementRegistered;
     public event QuestCompletedHandler OnAchievementCompleted;
 
+    public event QuestRecieveHandler OnQuestRecieved;
+    public event CheckCompleteHandler OnCheckCompleted;
+    public event QuestUpdateUIHandler OnUIUpdate;
+
     public IReadOnlyList<Quest> ActiveQuests => activeQuests;
     public IReadOnlyList<Quest> CompletedQuests => completedQuests;
     public IReadOnlyList<Quest> ActiveAchievements => activeAchievements;
     public IReadOnlyList<Quest> CompletedAchievements => completedAchievements;
 
-    private void Awake() 
-    {
-        if (!Load())
-        {
-            foreach (var achievement in _achievementDatabase.Quests)
-                Register(achievement);
-        }
-    }
+    // private void Awake() 
+    // {
+    //     if (!Load())
+    //     {
+    //         foreach (var achievement in _achievementDatabase.Quests)
+    //             Register(achievement);
+    //     }
+    // }
 
     private void OnApplicationQuit() {
         Save();
@@ -84,14 +91,14 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     public void Report(object target, int successCount)
     {
-        ReceiveReport(activeQuests, target, successCount);
-        ReceiveReport(activeAchievements, target, successCount);
+        ReceiveReport(target, successCount);
     }
 
-    private void ReceiveReport(List<Quest> quests, object target, int successCount)
+    private void ReceiveReport(object target, int successCount)
     {
-        foreach (var quest in quests.ToArray())
-            quest.ReceieveReport(target, successCount);
+        OnQuestRecieved?.Invoke(target, successCount);
+        OnCheckCompleted?.Invoke();
+        OnUIUpdate?.Invoke();
     }
 
     private void Save()
@@ -167,10 +174,13 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     private void SetQuestCompleted(Quest quest)
     {
-        activeQuests.Remove(quest);
-        completedQuests.Add(quest);
+        if (activeQuests.Contains(quest))
+        {
+            activeQuests.Remove(quest);
+            completedQuests.Add(quest);
 
-        OnQuestCompleted?.Invoke(quest);
+            OnQuestCompleted?.Invoke(quest);
+        }
     }
 
     private void SetQuestCanceled(Quest quest)

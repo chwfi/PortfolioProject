@@ -10,7 +10,8 @@ public enum QuestState
     Active,
     Complete,
     Cancel,
-    WaitingForCompletion
+    WaitingForCompletion,
+    None
 }
 
 [CreateAssetMenu(menuName = "SO/Quest/Quest")]
@@ -27,12 +28,13 @@ public class Quest : ScriptableObject
     [SerializeField] private string _questDescription;
 
     [Header("TaskGroup")]
-    [SerializeField] private TaskGroup _taskGroup;
+    [SerializeField] private Task[] _taskGroup;
 
     [Header("Reward")]
     [SerializeField] private Reward[] _rewards;
 
     [Header("Option")]
+    [SerializeField] private bool _isAutoStartQuest;
     [SerializeField] private bool _isAutoComplete;
     [SerializeField] private bool _isCanclable;
     [SerializeField] private bool _isSavable;
@@ -41,7 +43,7 @@ public class Quest : ScriptableObject
     public event CanceldHandler OnCanceled;
     public event UpdateUIHandler OnUIUpdate;
 
-    public TaskGroup TaskGroup => _taskGroup;
+    public Task[] TaskGroup => _taskGroup;
     public string CodeName => _codeName;
     private QuestState _state;
     public QuestState State
@@ -64,44 +66,62 @@ public class Quest : ScriptableObject
     public bool IsCancel => State == QuestState.Cancel;
     public virtual bool IsCancelable => _isCanclable;
     public virtual bool IsSavable => _isSavable;
+    public bool IsAllTaskComplete => _taskGroup.All(x => x.IsComplete);
 
     public void OnRegister()
     {
         Debug.Assert(!IsRegistered, "This quest has already been registered"); //Assert 코드는 디버깅이지만 빌드를 하면 자동으로 삭제되어 유용하다.
 
-        _taskGroup.SetOwner(this);
-        _taskGroup.Start();
+        QuestSystem.Instance.OnQuestRecieved += OnReceieveReport;
+        QuestSystem.Instance.OnUIUpdate += OnUpdateUI;
+        QuestSystem.Instance.OnCheckCompleted += OnCheckComplete;
+
+        foreach (var task in _taskGroup)
+        {
+            task.Start();
+            task.SetOwner(this);
+        }
+           
         OnUIUpdate?.Invoke(this);
+
+        if (_isAutoStartQuest)
+            State = QuestState.Active;
     }
 
-    public void ReceieveReport(object target, int successCount)
+    public void OnReceieveReport(object target, int successCount)
     {
         if (IsComplete)
             return;
 
-        _taskGroup.ReceiveReport(target, successCount);
+        foreach (var task in _taskGroup)
+            task.ReceieveReport(target, successCount, this);
+    }
 
-        if (_taskGroup.IsAllTaskComplete)
+    public void OnCheckComplete()
+    {
+        if (IsAllTaskComplete)
         {
-            State = QuestState.WaitingForCompletion;
             if (_isAutoComplete)
                 Complete();
         }
-        else
-            State = QuestState.Active;
+    }
+
+    public void OnUpdateUI()
+    {
+        OnUIUpdate?.Invoke(this);
     }
 
     public void Complete()
     {
-        Debug.Log("퀘스트 완료됨");
-
-        _taskGroup.CompleteImmediately();
-
         State = QuestState.Complete;
         OnCompleted?.Invoke(this);
 
         foreach (var reward in _rewards)
             reward.Give(this);
+
+        QuestSystem.Instance.OnQuestRecieved -= OnReceieveReport;
+        QuestSystem.Instance.OnUIUpdate -= OnUpdateUI;
+        QuestSystem.Instance.OnCheckCompleted -= OnCheckComplete;
 
         OnCompleted = null;
         OnCanceled = null;
@@ -128,9 +148,8 @@ public class Quest : ScriptableObject
         return new QuestSaveData
         {
             codename = _codeName,
-            //binder = _questBinder,
             state = State,
-            taskSuccessCounts = _taskGroup.Tasks.Select(x => x.CurrentSuccessValue).ToArray()
+            taskSuccessCounts = _taskGroup.Select(x => x.CurrentSuccessValue).ToArray()
         };
     }
 
@@ -147,8 +166,9 @@ public class Quest : ScriptableObject
 
         for (int i = 0; i < saveData.taskSuccessCounts.Length; i++)
         {
-            _taskGroup.Start();
-            _taskGroup.Tasks[i].CurrentSuccessValue = saveData.taskSuccessCounts[i];
+            var taskGroup = _taskGroup[i];
+            taskGroup.Start();
+            _taskGroup[i].CurrentSuccessValue = saveData.taskSuccessCounts[i];
         }
     }
 }
