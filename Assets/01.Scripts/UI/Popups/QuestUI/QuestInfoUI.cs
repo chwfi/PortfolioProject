@@ -24,8 +24,6 @@ public class QuestInfoUI : QuestUI
             txt.OwnTask = task;
             _taskSuccessCountTexts.Add(txt);
         }      
-
-        UpdateUI(binder);
     }
 
     public override void UpdateUI(Quest binder)

@@ -479,6 +479,7 @@ MonoBehaviour:
   _questDescriptionText: {fileID: 839612368}
   _questStateText: {fileID: 1137596257}
   _taskSuccessCountText: {fileID: 1975488045675086875, guid: 804d7611ea9bc4a3dba6a30d72de2617, type: 3}
+  questTest: {fileID: 0}
 --- !u!222 &59902088
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1082,7 +1083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67959f24cbac746a4bf629d223f8667a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 11400000, guid: 59518f41e9afa4893b063ac187d35295, type: 2}
+  _quest:
+  - {fileID: 11400000, guid: 59518f41e9afa4893b063ac187d35295, type: 2}
+  - {fileID: 11400000, guid: 266308459eb76428bb7cfaa84e1e80fc, type: 2}
 --- !u!1 &717552028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,6 +2382,7 @@ MonoBehaviour:
   _questDescriptionText: {fileID: 1545900662}
   _questStateText: {fileID: 717552030}
   _taskSuccessCountText: {fileID: 1975488045675086875, guid: 804d7611ea9bc4a3dba6a30d72de2617, type: 3}
+  questTest: {fileID: 0}
 --- !u!1 &1545900660
 GameObject:
   m_ObjectHideFlags: 0

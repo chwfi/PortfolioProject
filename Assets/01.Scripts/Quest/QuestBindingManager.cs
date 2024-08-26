@@ -8,10 +8,11 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
     private PopupUIController _questUIController;
     private List<QuestUI> _uiList = new();
 
-    private void Awake() {
+    private void Awake() 
+    {
         var questSystem = QuestSystem.Instance;
+
         questSystem.OnQuestRegistered += SetQuestDictionary;
-        //questSystem.OnLoad += SetQuestDictionary;
 
         _questUIController = FindObjectOfType<PopupUIController>();
         _uiList.AddRange(_questUIController.transform.GetComponentsInChildren<QuestUI>());

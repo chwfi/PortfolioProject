@@ -170,8 +170,5 @@ public class Quest : ScriptableObject
                 _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
             }
         }
-
-        OnUISet?.Invoke(this);
-        OnUIUpdate?.Invoke(this);
     }
 }

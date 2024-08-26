@@ -13,7 +13,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, kSaveFileName);
     #endregion
 
-    #region Events
+    #region Handlers
     public delegate void QuestRegisteredHandler(Quest newQuest);
     public delegate void QuestCompletedHandler(Quest quest);
     public delegate void QuestCanceledHandler(Quest quest);
@@ -22,15 +22,15 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public delegate void QuestUpdateUIHandler();
     #endregion
 
-    private List<Quest> activeQuests = new();
-    private List<Quest> completedQuests = new();
-
-    private List<Quest> activeAchievements = new();
-    private List<Quest> completedAchievements = new();
+    private List<Quest> _activeQuests = new();
+    private List<Quest> _completedQuests = new();
+    private List<Quest> _activeAchievements = new();
+    private List<Quest> _completedAchievements = new();
 
     [SerializeField] private QuestDatabase _questDatabase;
     [SerializeField] private QuestDatabase _achievementDatabase;
 
+    #region Events
     public event QuestRegisteredHandler OnQuestRegistered;
     public event QuestCompletedHandler OnQuestCompleted;
     public event QuestCanceledHandler OnQuestCanceled;
@@ -41,6 +41,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
     public event QuestUpdateUIHandler OnUIUpdate;
+    #endregion
 
     public bool IsFileExist => File.Exists(SaveFilePath);
 
@@ -61,7 +62,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         {
             newQuest.OnCompleted += SetAchievementCompleted;
 
-            activeAchievements.Add(newQuest);
+            _activeAchievements.Add(newQuest);
 
             OnAchievementRegistered?.Invoke(newQuest);
             newQuest.OnRegister();
@@ -71,7 +72,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             newQuest.OnCompleted += SetQuestCompleted;
             newQuest.OnCanceled += SetQuestCanceled;
 
-            activeQuests.Add(newQuest);
+            _activeQuests.Add(newQuest);
 
             OnQuestRegistered?.Invoke(newQuest);
             newQuest.OnRegister();
@@ -90,10 +91,10 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     {
         var root = new JObject
         {
-            { "activeQuests", CreateSaveDatas(activeQuests) },
-            { "completedQuests", CreateSaveDatas(completedQuests) },
-            { "activeAchievements", CreateSaveDatas(activeAchievements) },
-            { "completedAchievements", CreateSaveDatas(completedAchievements) }
+            { "activeQuests", CreateSaveDatas(_activeQuests) },
+            { "completedQuests", CreateSaveDatas(_completedQuests) },
+            { "activeAchievements", CreateSaveDatas(_activeAchievements) },
+            { "completedAchievements", CreateSaveDatas(_completedAchievements) }
         };
 
         File.WriteAllText(SaveFilePath, root.ToString());
@@ -156,24 +157,19 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         newQuest.LoadFrom(saveData);
 
         if (newQuest is Achievement)
-            completedAchievements.Add(newQuest);
+            _completedAchievements.Add(newQuest);
         else
-            completedQuests.Add(newQuest);
+            _completedQuests.Add(newQuest);
     }
 
-    public bool IsQuestActive(string codeName)
-    {
-        return activeQuests.Any(q => q.CodeName == codeName) || 
-            activeAchievements.Any(a => a.CodeName == codeName);
-    }
 
     #region CallBacks
     private void SetQuestCompleted(Quest quest)
     {
-        if (activeQuests.Contains(quest))
+        if (_activeQuests.Contains(quest))
         {
-            activeQuests.Remove(quest);
-            completedQuests.Add(quest);
+            _activeQuests.Remove(quest);
+            _completedQuests.Add(quest);
 
             OnQuestCompleted?.Invoke(quest);
         }
@@ -181,7 +177,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     private void SetQuestCanceled(Quest quest)
     {
-        activeQuests.Remove(quest);
+        _activeQuests.Remove(quest);
 
         OnQuestCanceled?.Invoke(quest);
 
@@ -190,8 +186,8 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     private void SetAchievementCompleted(Quest achievement)
     {
-        activeAchievements.Remove(achievement);
-        completedAchievements.Add(achievement); // Completed List로 이동
+        _activeAchievements.Remove(achievement);
+        _completedAchievements.Add(achievement); // Completed List로 이동
 
         OnAchievementCompleted?.Invoke(achievement);
     }
