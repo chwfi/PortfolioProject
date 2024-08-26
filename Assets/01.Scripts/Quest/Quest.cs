@@ -19,6 +19,7 @@ public class Quest : ScriptableObject
 {
     public delegate void CompletedHandler(Quest quest);
     public delegate void CanceldHandler(Quest quest);
+    public delegate void SetUIHandler(Quest quest);
     public delegate void UpdateUIHandler(Quest quest);
 
     [Header("Info")]
@@ -41,6 +42,7 @@ public class Quest : ScriptableObject
 
     public event CompletedHandler OnCompleted;
     public event CanceldHandler OnCanceled;
+    public event SetUIHandler OnUISet;
     public event UpdateUIHandler OnUIUpdate;
 
     public Task[] TaskGroup => _taskGroup;
@@ -78,14 +80,15 @@ public class Quest : ScriptableObject
 
         foreach (var task in _taskGroup)
         {
-            task.Start();
             task.SetOwner(this);
+            task.Start();
         }
-           
-        OnUIUpdate?.Invoke(this);
 
         if (_isAutoStartQuest)
             State = QuestState.Active;
+
+        OnUISet?.Invoke(this);
+        OnUIUpdate?.Invoke(this);
     }
 
     public void OnReceieveReport(object target, int successCount)
@@ -147,28 +150,28 @@ public class Quest : ScriptableObject
     {
         return new QuestSaveData
         {
-            codename = _codeName,
-            state = State,
-            taskSuccessCounts = _taskGroup.Select(x => x.CurrentSuccessValue).ToArray()
+            codeName = _codeName,
+            state = _state,
+            taskSaveData = _taskGroup.Select(task => new TaskSaveData
+            {
+                currentSuccess = task.CurrentSuccessValue
+            }).ToArray()
         };
     }
 
     public void LoadFrom(QuestSaveData saveData)
     {
-        State = saveData.state;
+        _state = saveData.state;
 
-        // for (int i = 0; i < _currentTaskGroupIndex; i++)
-        // {
-        //     var taskGroup = _taskGroups[i];
-        //     taskGroup.Start();
-        //     taskGroup.Complete();
-        // }
-
-        for (int i = 0; i < saveData.taskSuccessCounts.Length; i++)
+        for (int i = 0; i < _taskGroup.Length; i++)
         {
-            var taskGroup = _taskGroup[i];
-            taskGroup.Start();
-            _taskGroup[i].CurrentSuccessValue = saveData.taskSuccessCounts[i];
+            if (i < saveData.taskSaveData.Length)
+            {
+                _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
+            }
         }
+
+        OnUISet?.Invoke(this);
+        OnUIUpdate?.Invoke(this);
     }
 }

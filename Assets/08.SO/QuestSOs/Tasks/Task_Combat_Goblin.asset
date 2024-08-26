@@ -16,3 +16,4 @@ MonoBehaviour:
   _taskTarget: {fileID: 11400000, guid: b9d42bc9d1f384417bf9327e17e0cd1b, type: 2}
   _initialSuccessValue: 0
   _needToSuccessValue: 5
+  IsComplete: 0

@@ -22,5 +22,7 @@ public abstract class QuestUI : UI_Popup
         _countGroupTrm = transform.Find("SuccessCountLayoutGroup").transform;
     }
 
+    public abstract void SetUI(Quest binder);
+
     public abstract void UpdateUI(Quest binder);
 }

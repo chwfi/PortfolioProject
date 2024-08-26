@@ -1,6 +1,11 @@
 public struct QuestSaveData
 {
-    public string codename;
+    public string codeName;
     public QuestState state;
-    public int[] taskSuccessCounts;
+    public TaskSaveData[] taskSaveData;
+}
+
+public struct TaskSaveData
+{
+    public int currentSuccess;
 }

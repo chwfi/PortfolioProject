@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,18 +15,22 @@ public class QuestInfoUI : QuestUI
         base.AccessUI(active);
     }
 
+    public override void SetUI(Quest binder)
+    {
+        Debug.Log("SetUI");
+        foreach (var task in binder.TaskGroup)
+        {
+            TaskSuccessCountText txt = Instantiate(_taskSuccessCountText, _countGroupTrm);
+            txt.OwnTask = task;
+            _taskSuccessCountTexts.Add(txt);
+        }      
+
+        UpdateUI(binder);
+    }
+
     public override void UpdateUI(Quest binder)
     {
-        if (binder.State == QuestState.Inactive)
-        {
-            foreach (var task in binder.TaskGroup)
-            {
-                TaskSuccessCountText txt = Instantiate(_taskSuccessCountText, _countGroupTrm);
-                txt.OwnTask = task;
-                _taskSuccessCountTexts.Add(txt);
-            }
-        }
-
+        Debug.Log("UpdateUI");
         foreach (var txt in _taskSuccessCountTexts)
         {
             txt.UpdateText();

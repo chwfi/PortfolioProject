@@ -22,4 +22,4 @@ MonoBehaviour:
   _isAutoStartQuest: 1
   _isAutoComplete: 1
   _isCanclable: 1
-  _isSavable: 0
+  _isSavable: 1

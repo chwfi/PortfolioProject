@@ -1,18 +1,16 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-using Unity.Collections;
 using UnityEngine;
+using System.IO;
+using System.Linq;
 
 public class QuestSystem : MonoSingleton<QuestSystem>
 {
     #region SavePath
-    private const string kSaveRootPath = "questSystem";
-    private const string kActiveQuestsSavePath = "activeQuests";
-    private const string kCompletedQuestsSavePath = "completedQuests";
-    private const string kActiveAchievementsSavePath = "activeAchievement";
-    private const string kCompletedAchievementsSavePath = "completedAchievement";
+    private const string kCompletedAchievementsSavePath = "completedAchievements.json";
+    private const string kSaveFileName = "questData.json";
+    private string SaveFilePath => Path.Combine(Application.persistentDataPath, kSaveFileName);
     #endregion
 
     #region Events
@@ -44,28 +42,21 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public event CheckCompleteHandler OnCheckCompleted;
     public event QuestUpdateUIHandler OnUIUpdate;
 
-    public IReadOnlyList<Quest> ActiveQuests => activeQuests;
-    public IReadOnlyList<Quest> CompletedQuests => completedQuests;
-    public IReadOnlyList<Quest> ActiveAchievements => activeAchievements;
-    public IReadOnlyList<Quest> CompletedAchievements => completedAchievements;
+    public bool IsFileExist => File.Exists(SaveFilePath);
 
-    // private void Awake() 
-    // {
-    //     if (!Load())
-    //     {
-    //         foreach (var achievement in _achievementDatabase.Quests)
-    //             Register(achievement);
-    //     }
-    // }
-
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit() 
+    {
         Save();
+    }
+
+    private void Start() 
+    {
+        Load();
     }
 
     public Quest Register(Quest quest)
     {
         var newQuest = quest.Clone();
-
         if (newQuest is Achievement)
         {
             newQuest.OnCompleted += SetAchievementCompleted;
@@ -85,16 +76,10 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             OnQuestRegistered?.Invoke(newQuest);
             newQuest.OnRegister();
         }
-
         return newQuest;
     }
 
     public void Report(object target, int successCount)
-    {
-        ReceiveReport(target, successCount);
-    }
-
-    private void ReceiveReport(object target, int successCount)
     {
         OnQuestRecieved?.Invoke(target, successCount);
         OnCheckCompleted?.Invoke();
@@ -105,32 +90,36 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     {
         var root = new JObject
         {
-            { kActiveQuestsSavePath, CreateSaveDatas(activeQuests) },
-            { kCompletedQuestsSavePath, CreateSaveDatas(completedQuests) },
-            { kActiveAchievementsSavePath, CreateSaveDatas(activeAchievements) },
-            { kCompletedAchievementsSavePath, CreateSaveDatas(completedAchievements) }
+            { "activeQuests", CreateSaveDatas(activeQuests) },
+            { "completedQuests", CreateSaveDatas(completedQuests) },
+            { "activeAchievements", CreateSaveDatas(activeAchievements) },
+            { "completedAchievements", CreateSaveDatas(completedAchievements) }
         };
 
-        PlayerPrefs.SetString(kSaveRootPath, root.ToString());
-        PlayerPrefs.Save();
+        File.WriteAllText(SaveFilePath, root.ToString());
+        Debug.Log($"Data saved to {SaveFilePath}");
     }
 
     private bool Load()
     {
-        if (PlayerPrefs.HasKey(kSaveRootPath))
+        if (File.Exists(SaveFilePath))
         {
-            var root = JObject.Parse(PlayerPrefs.GetString(kSaveRootPath));
+            var jsonContent = File.ReadAllText(SaveFilePath);
+            var root = JObject.Parse(jsonContent);
 
-            LoadSaveDatas(root[kActiveQuestsSavePath], _questDatabase, LoadActiveQuest);
-            LoadSaveDatas(root[kCompletedQuestsSavePath], _questDatabase, LoadCompleteQuest);
+            LoadSaveDatas(root["activeQuests"], _questDatabase, LoadActiveQuest);
+            LoadSaveDatas(root["completedQuests"], _questDatabase, LoadCompleteQuest);
+            LoadSaveDatas(root["activeAchievements"], _achievementDatabase, LoadActiveQuest);
+            LoadSaveDatas(root["completedAchievements"], _achievementDatabase, LoadCompleteQuest);
 
-            LoadSaveDatas(root[kActiveAchievementsSavePath], _achievementDatabase, LoadActiveQuest);
-            LoadSaveDatas(root[kCompletedAchievementsSavePath], _achievementDatabase, LoadCompleteQuest);
-            
+            Debug.Log("Data loaded from JSON file.");
             return true;
         }
         else
+        {
+            Debug.Log("Save file not found.");
             return false;
+        }
     }
 
     private JArray CreateSaveDatas(IReadOnlyList<Quest> quests)
@@ -144,14 +133,14 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         return saveDatas;
     }
 
-    private void LoadSaveDatas(JToken datasToken, QuestDatabase database, System.Action<QuestSaveData, Quest> onSuccess)
+    private void LoadSaveDatas(JToken datasToken, QuestDatabase database, Action<QuestSaveData, Quest> onSuccess)
     {
         var datas = datasToken as JArray;
         foreach (var data in datas)
         {
             var saveData = data.ToObject<QuestSaveData>();
-            var quest = database.FindQuestBy(saveData.codename);
-            onSuccess.Invoke(saveData, quest);
+            var quest = database.FindQuestBy(saveData.codeName);
+            onSuccess?.Invoke(saveData, quest);
         }
     }
 
@@ -172,6 +161,13 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             completedQuests.Add(newQuest);
     }
 
+    public bool IsQuestActive(string codeName)
+    {
+        return activeQuests.Any(q => q.CodeName == codeName) || 
+            activeAchievements.Any(a => a.CodeName == codeName);
+    }
+
+    #region CallBacks
     private void SetQuestCompleted(Quest quest)
     {
         if (activeQuests.Contains(quest))
@@ -186,6 +182,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     private void SetQuestCanceled(Quest quest)
     {
         activeQuests.Remove(quest);
+
         OnQuestCanceled?.Invoke(quest);
 
         Destroy(quest, Time.deltaTime);
@@ -194,8 +191,9 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     private void SetAchievementCompleted(Quest achievement)
     {
         activeAchievements.Remove(achievement);
-        activeAchievements.Add(achievement);
+        completedAchievements.Add(achievement); // Completed List로 이동
 
         OnAchievementCompleted?.Invoke(achievement);
     }
+    #endregion
 }

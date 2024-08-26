@@ -11,6 +11,7 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
     private void Awake() {
         var questSystem = QuestSystem.Instance;
         questSystem.OnQuestRegistered += SetQuestDictionary;
+        //questSystem.OnLoad += SetQuestDictionary;
 
         _questUIController = FindObjectOfType<PopupUIController>();
         _uiList.AddRange(_questUIController.transform.GetComponentsInChildren<QuestUI>());
@@ -22,6 +23,7 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
         {
             if (ui.CodeName == quest.CodeName)
             {
+                quest.OnUISet += ui.SetUI;
                 quest.OnUIUpdate += ui.UpdateUI;
             }
         }
