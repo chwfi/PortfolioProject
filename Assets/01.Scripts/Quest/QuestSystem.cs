@@ -20,6 +20,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public delegate void QuestRecieveHandler(object target, int successCount);
     public delegate void CheckCompleteHandler();
     public delegate void QuestUpdateUIHandler();
+    public delegate void QuestSetUIHandler(Quest quest);
     #endregion
 
     private List<Quest> _activeQuests = new();
@@ -40,7 +41,8 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
-    public event QuestUpdateUIHandler OnUIUpdate;
+    public event QuestUpdateUIHandler OnUpdateQuestUI;
+    public event QuestSetUIHandler OnSetQuestUI;
     #endregion
 
     public bool IsFileExist => File.Exists(SaveFilePath);
@@ -58,6 +60,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     public Quest Register(Quest quest)
     {
         var newQuest = quest.Clone();
+
         if (newQuest is Achievement)
         {
             newQuest.OnCompleted += SetAchievementCompleted;
@@ -77,6 +80,9 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             OnQuestRegistered?.Invoke(newQuest);
             newQuest.OnRegister();
         }
+
+        OnSetQuestUI?.Invoke(newQuest);
+        OnUpdateQuestUI?.Invoke();
         return newQuest;
     }
 
@@ -84,7 +90,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     {
         OnQuestRecieved?.Invoke(target, successCount);
         OnCheckCompleted?.Invoke();
-        OnUIUpdate?.Invoke();
+        OnUpdateQuestUI?.Invoke();
     }
 
     private void Save()
@@ -149,12 +155,16 @@ public class QuestSystem : MonoSingleton<QuestSystem>
     {
         var newQuest = Register(quest);
         newQuest.LoadFrom(saveData);
+        OnUpdateQuestUI?.Invoke();
     }
 
     private void LoadCompleteQuest(QuestSaveData saveData, Quest quest)
     {
         var newQuest = quest.Clone();
+        OnQuestRegistered?.Invoke(newQuest);
+        //newQuest.OnRegister();
         newQuest.LoadFrom(saveData);
+        OnSetQuestUI?.Invoke(newQuest);
 
         if (newQuest is Achievement)
             _completedAchievements.Add(newQuest);

@@ -54,7 +54,7 @@ public class Quest : ScriptableObject
         set
         {
             _state = value;
-            OnUIUpdate?.Invoke(this);
+            OnUpdateUI();
         }
     }
     public string QuestName => _questName;
@@ -74,10 +74,6 @@ public class Quest : ScriptableObject
     {
         Debug.Assert(!IsRegistered, "This quest has already been registered"); //Assert 코드는 디버깅이지만 빌드를 하면 자동으로 삭제되어 유용하다.
 
-        QuestSystem.Instance.OnQuestRecieved += OnReceieveReport;
-        QuestSystem.Instance.OnUIUpdate += OnUpdateUI;
-        QuestSystem.Instance.OnCheckCompleted += OnCheckComplete;
-
         foreach (var task in _taskGroup)
         {
             task.SetOwner(this);
@@ -86,9 +82,6 @@ public class Quest : ScriptableObject
 
         if (_isAutoStartQuest)
             State = QuestState.Active;
-
-        OnUISet?.Invoke(this);
-        OnUIUpdate?.Invoke(this);
     }
 
     public void OnReceieveReport(object target, int successCount)
@@ -109,22 +102,20 @@ public class Quest : ScriptableObject
         }
     }
 
-    public void OnUpdateUI()
-    {
-        OnUIUpdate?.Invoke(this);
-    }
-
     public void Complete()
     {
+        var questSystem = QuestSystem.Instance;
         State = QuestState.Complete;
+
         OnCompleted?.Invoke(this);
 
         foreach (var reward in _rewards)
             reward.Give(this);
 
-        QuestSystem.Instance.OnQuestRecieved -= OnReceieveReport;
-        QuestSystem.Instance.OnUIUpdate -= OnUpdateUI;
-        QuestSystem.Instance.OnCheckCompleted -= OnCheckComplete;
+        questSystem.OnQuestRecieved -= OnReceieveReport;
+        questSystem.OnUpdateQuestUI -= OnUpdateUI;
+        questSystem.OnSetQuestUI -= OnSetUI;
+        questSystem.OnCheckCompleted -= OnCheckComplete;
 
         OnCompleted = null;
         OnCanceled = null;
@@ -142,6 +133,13 @@ public class Quest : ScriptableObject
     {
         var clone = Instantiate(this);
         clone._taskGroup = _taskGroup;
+
+        var questSystem = QuestSystem.Instance;
+        
+        questSystem.OnUpdateQuestUI += clone.OnUpdateUI;
+        questSystem.OnSetQuestUI += clone.OnSetUI;
+        questSystem.OnQuestRecieved += clone.OnReceieveReport;
+        questSystem.OnCheckCompleted += clone.OnCheckComplete;
 
         return clone;
     }
@@ -171,4 +169,20 @@ public class Quest : ScriptableObject
             }
         }
     }
+
+    #region EventReciever
+    public void OnUpdateUI()
+    {
+        OnUIUpdate?.Invoke(this);
+    }
+
+    public void OnSetUI(Quest quest)
+    {
+        if (quest.CodeName != this.CodeName)
+            return;
+
+        OnUISet?.Invoke(this);
+        OnUIUpdate?.Invoke(this);
+    }
+    #endregion
 }
