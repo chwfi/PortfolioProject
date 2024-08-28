@@ -6,14 +6,14 @@ public class State
 {
     protected Entity _owner; // State의 주체
     protected StateMachine _stateMachine;
-    protected TransitionCondition _condition;
+    protected TransitionCondition _condition; // 상태 전이 조건. State에서 직접 할당해줌
     protected int _animBoolHash; // 애니메이션 실행을 위한 해쉬
 
     public State(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName)
     {
         _owner = owner;
         _stateMachine = stateMachine;
-        _condition = condition;
+        _condition = condition; // 여기엔 일단 null 할당
         _animBoolHash = Animator.StringToHash(animName);
     }
 
@@ -23,9 +23,14 @@ public class State
         // State 시작 시, State의 이름을 따와 그에 맞는 애니메이션을 자동으로 실행시킴
     }
 
-    public virtual void UpdateState() // State의 기본 로직을 실행하는 함수
+    public virtual void UpdateState() // Update에서 실행해주는 함수
     {
 
+    }
+
+    public virtual void FixedUpdateState() //FixedUpdate에서 실행해주는 함수. 물리 로직을 실행할 때 상속
+    {
+        
     }
 
     public virtual void ExitState() // State가 끝날때 실행되는 함수

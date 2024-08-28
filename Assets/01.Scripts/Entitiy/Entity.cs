@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {   
-    #region Components
+    #region BaseComponents
     public StateMachine StateMachineCompo { get; private set; }
     public EntityAnimatorController AnimatorControllerCompo { get; private set; }
     public MoveComponent MoveCompo { get; private set; }
+    public TargetComponent TargetCompo { get; protected set; } // protect로 구현된 setter는 자식에서 할당한다는 것을 의미
     #endregion
 
     [Header("Transition Conditions")]
@@ -23,19 +24,40 @@ public class Entity : MonoBehaviour
         AnimatorControllerCompo = visual.GetComponent<EntityAnimatorController>();
         MoveCompo = transform.GetComponent<MoveComponent>();
 
+        SetComponents();
         SetTransitionConditions();
         SetStates();
     }
 
+    private void Start() 
+    {
+        StateMachineCompo.Init(StateTypeEnum.Idle); // Idle을 첫 State로 시작
+    }
+
+    private void SetComponents()
+    {
+        List<BaseComponent> components = new();
+        components.AddRange(transform.GetComponents<BaseComponent>());
+        // 컴포넌트들을 모두 긁어와서 리스트에 넣어준다.
+
+        foreach (var compo in components)
+        {
+            compo.SetOwner(this); // 리스트를 순회하며 오너를 세팅해줌
+        }
+    }
+
     private void SetTransitionConditions()
     {
-        Debug.Log("SetConditions");
+        if (_conditions.Length == 0)
+            return;
+
         ConditionDictionary = new Dictionary<ConditionTypeEnum, TransitionCondition>();
 
         foreach (var condition in _conditions)
         {
             condition.Owner = this;
             ConditionDictionary.Add(condition.ConditionType, condition);
+            // 컨디션 배열들을 모두 딕셔너리에 넣어줌
         }
     }
 
@@ -48,7 +70,7 @@ public class Entity : MonoBehaviour
             string typeName = state.ToString(); // stateEnum값의 이름 받아옴
             Type t = Type.GetType($"{typeName}State"); // 받아온 이름으로 Type 가져옴 (이름 형식은 "XX State")
             State newState = Activator.CreateInstance(t, this, StateMachineCompo, null, typeName) as State; 
-            // Type을 넣어 리플렉션으로 State 생성. State 생성자의 매개변수들을 넘겨준다.
+            // Type을 넣어 리플렉션으로 State 생성. State 생성자의 매개변수들을 넘겨준다. 3번째 매개변수는 State에서 직접 구현하므로 일단 null 넘김
 
             if (newState == null)
             {
@@ -57,12 +79,15 @@ public class Entity : MonoBehaviour
             }
             StateMachineCompo.AddState(state, newState); //StateMachine에 새로 생성한 State 등록
         }
-
-        StateMachineCompo.Init(StateTypeEnum.Idle); // Idle을 첫 State로 시작
     }
 
     private void Update() 
     {
         StateMachineCompo.CurrentState.UpdateState();
+    }
+
+    private void FixedUpdate() 
+    {
+        StateMachineCompo.CurrentState.FixedUpdateState();
     }
 }

@@ -9,7 +9,7 @@ public class PlayerStopCondition : TransitionCondition
 
     public override bool IsConditionValid()
     {
-        if (_playerMove.Input.MoveInput.magnitude <= 0)
+        if (_playerMove.Input.MoveInput.magnitude <= 0) // 방향키 입력값이 감지되지 않는다면 true 반환
             return true;
         else
             return false;

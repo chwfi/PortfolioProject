@@ -13,6 +13,8 @@ public class IdleState : State
         base.EnterState();
 
         _owner.ConditionDictionary.TryGetValue(ConditionTypeEnum.IdleToMove, out _condition);
+
+        _owner.MoveCompo.StopImmediately();
     }
 
     public override void UpdateState()

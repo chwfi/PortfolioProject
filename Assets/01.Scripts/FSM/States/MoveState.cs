@@ -19,10 +19,15 @@ public class MoveState : State
     {
         base.UpdateState();
 
-        _owner.MoveCompo.OnUpdate();
-
         if (_condition.IsConditionValid())
             _stateMachine.ChangeState(StateTypeEnum.Idle);
+    }
+
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        _owner.MoveCompo.OnMove();
     }
 
     public override void ExitState()

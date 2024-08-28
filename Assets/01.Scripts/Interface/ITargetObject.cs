@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ITargetObject
 {
-    public GameObject Owner { get; }
+    public GameObject Object { get; }
     public void DestroyObject();
 }
