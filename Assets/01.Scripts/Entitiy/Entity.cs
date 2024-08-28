@@ -11,8 +11,10 @@ public class Entity : MonoBehaviour
     public MoveComponent MoveCompo { get; private set; }
     #endregion
 
-    [Header("State Transition Condition")]
-    [SerializeField] private TransitionCondition _condition;
+    [Header("Transition Conditions")]
+    [SerializeField] private TransitionCondition[] _conditions;
+
+    public Dictionary<ConditionTypeEnum, TransitionCondition> ConditionDictionary { get; private set; }
 
     protected virtual void Awake() 
     {
@@ -21,7 +23,20 @@ public class Entity : MonoBehaviour
         AnimatorControllerCompo = visual.GetComponent<EntityAnimatorController>();
         MoveCompo = transform.GetComponent<MoveComponent>();
 
+        SetTransitionConditions();
         SetStates();
+    }
+
+    private void SetTransitionConditions()
+    {
+        Debug.Log("SetConditions");
+        ConditionDictionary = new Dictionary<ConditionTypeEnum, TransitionCondition>();
+
+        foreach (var condition in _conditions)
+        {
+            condition.Owner = this;
+            ConditionDictionary.Add(condition.ConditionType, condition);
+        }
     }
 
     private void SetStates() // Reflection을 사용하여 런타임에 동적으로 State들에 접근해 추가해주는 로직
@@ -32,7 +47,7 @@ public class Entity : MonoBehaviour
         {
             string typeName = state.ToString(); // stateEnum값의 이름 받아옴
             Type t = Type.GetType($"{typeName}State"); // 받아온 이름으로 Type 가져옴 (이름 형식은 "XX State")
-            State newState = Activator.CreateInstance(t, this, StateMachineCompo, _condition, typeName) as State; 
+            State newState = Activator.CreateInstance(t, this, StateMachineCompo, typeName) as State; 
             // Type을 넣어 리플렉션으로 State 생성. State 생성자의 매개변수들을 넘겨준다.
 
             if (newState == null)

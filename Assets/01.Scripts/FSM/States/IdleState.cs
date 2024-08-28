@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class IdleState : State
 {
-    public IdleState(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName) : base(owner, stateMachine, condition, animName)
+    private TransitionCondition _condition;
+
+    public IdleState(Entity owner, StateMachine stateMachine, string animName) : base(owner, stateMachine, animName)
     {
     }
 
     public override void EnterState()
     {
         base.EnterState();
+
+        _owner.ConditionDictionary.TryGetValue(ConditionTypeEnum.IdleToMove, out _condition);
     }
 
     public override void UpdateState()
