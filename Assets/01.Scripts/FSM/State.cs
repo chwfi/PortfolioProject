@@ -6,12 +6,14 @@ public class State
 {
     protected Entity _owner; // State의 주체
     protected StateMachine _stateMachine;
+    protected TransitionCondition _condition;
     protected int _animBoolHash; // 애니메이션 실행을 위한 해쉬
 
-    public State(Entity owner, StateMachine stateMachine, string animName)
+    public State(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName)
     {
         _owner = owner;
         _stateMachine = stateMachine;
+        _condition = condition;
         _animBoolHash = Animator.StringToHash(animName);
     }
 

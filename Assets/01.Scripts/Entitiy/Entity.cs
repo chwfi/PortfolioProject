@@ -47,7 +47,7 @@ public class Entity : MonoBehaviour
         {
             string typeName = state.ToString(); // stateEnum값의 이름 받아옴
             Type t = Type.GetType($"{typeName}State"); // 받아온 이름으로 Type 가져옴 (이름 형식은 "XX State")
-            State newState = Activator.CreateInstance(t, this, StateMachineCompo, typeName) as State; 
+            State newState = Activator.CreateInstance(t, this, StateMachineCompo, null, typeName) as State; 
             // Type을 넣어 리플렉션으로 State 생성. State 생성자의 매개변수들을 넘겨준다.
 
             if (newState == null)

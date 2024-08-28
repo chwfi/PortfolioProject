@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MoveState : State
 {
-    private TransitionCondition _condition;
-
-    public MoveState(Entity owner, StateMachine stateMachine, string animName) : base(owner, stateMachine, animName)
+    public MoveState(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName) : base(owner, stateMachine, condition, animName)
     {
     }
 

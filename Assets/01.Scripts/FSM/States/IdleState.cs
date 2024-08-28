@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class IdleState : State
 {
-    private TransitionCondition _condition;
-
-    public IdleState(Entity owner, StateMachine stateMachine, string animName) : base(owner, stateMachine, animName)
+    public IdleState(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName) : base(owner, stateMachine, condition, animName)
     {
     }
 
