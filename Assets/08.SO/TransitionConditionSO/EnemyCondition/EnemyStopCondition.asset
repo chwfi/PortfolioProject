@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5144be87778340599c0c8fd24330467, type: 3}
   m_Name: EnemyStopCondition
   m_EditorClassIdentifier: 
-  _description: 
+  _description: (Enemy) Move To Idle Condition
   ConditionType: 1

@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 5
+  _stopRange: 1
   _targetLayer:
     serializedVersion: 2
     m_Bits: 128

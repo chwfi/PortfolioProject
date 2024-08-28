@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class TargetComponent : BaseComponent
 {
     [SerializeField] protected float _detectRange;
+    [SerializeField] protected float _stopRange;
     [SerializeField] protected LayerMask _targetLayer;
 
     public abstract Entity GetTarget();
