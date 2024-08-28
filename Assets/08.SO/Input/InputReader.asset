@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11c1b82c50ab3487ebbc793203338539, type: 3}
-  m_Name: TaskTarget_Theif
+  m_Script: {fileID: 11500000, guid: e23bb208dca35496b8192fdd636eedd4, type: 3}
+  m_Name: InputReader
   m_EditorClassIdentifier: 
-  _target: {fileID: 5875613494545659976, guid: 357a6ad4de0574e2aa62e2ea5979a68e, type: 3}
+  MoveInput: {x: 0, y: 0}

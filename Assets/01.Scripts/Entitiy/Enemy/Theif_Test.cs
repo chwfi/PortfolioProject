@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Theif_Test : TargetObject
+public class Theif_Test : MonoBehaviour, ITargetObject
 {
-    public override void DestroyObject()
+    public GameObject Owner => this.gameObject;
+
+    public void DestroyObject()
     {
         QuestSystem.Instance.Report(this, 1);
     }
