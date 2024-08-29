@@ -7,6 +7,7 @@ public enum StateTypeEnum
     Idle,
     Move,
     Attack,
+    Roll,
 }
 
 public class StateMachine

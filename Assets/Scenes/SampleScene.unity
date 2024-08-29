@@ -2479,6 +2479,7 @@ GameObject:
   - component: {fileID: 1168730726}
   - component: {fileID: 1168730728}
   - component: {fileID: 1168730731}
+  - component: {fileID: 1168730732}
   - component: {fileID: 1168730730}
   - component: {fileID: 1168730729}
   m_Layer: 7
@@ -2521,7 +2522,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87ea9e9180c174fc4953ddc488d38034, type: 2}
   - {fileID: 11400000, guid: 7028a2d81091b4a938fd49d0f92b87e5, type: 2}
   - {fileID: 11400000, guid: c08b89b780c804f0a8c660e3d586c4fa, type: 2}
-  - {fileID: 11400000, guid: 737ecf92355d74d9eb2566b46b760c59, type: 2}
+  - {fileID: 11400000, guid: 0d3fed0334ce345c888443e7539f3a5a, type: 2}
+  _skillList:
+  - {fileID: 11400000, guid: 0ff9032fa672b442fb8d2336236ddff0, type: 2}
 --- !u!114 &1168730728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2617,6 +2620,19 @@ MonoBehaviour:
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1168730732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168730723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a6b8f7249b74274a390e0a8dddb9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 0
 --- !u!1 &1509429694
 GameObject:
   m_ObjectHideFlags: 0

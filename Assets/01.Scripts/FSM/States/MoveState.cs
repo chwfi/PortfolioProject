@@ -25,6 +25,9 @@ public class MoveState : State
 
         if (_owner.GetConditionValid(ConditionTypeEnum.IsInputAttack))
             _stateMachine.ChangeState(StateTypeEnum.Attack);
+
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputRoll))
+            _stateMachine.ChangeState(StateTypeEnum.Roll);
     }
 
     public override void FixedUpdateState()

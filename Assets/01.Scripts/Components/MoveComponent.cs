@@ -8,6 +8,7 @@ public abstract class MoveComponent : BaseComponent
     [SerializeField] protected float _moveSpeed; // 이동속도
 
     public Rigidbody2D RigidbodyCompo { get; private set; }
+    public InputReader InputReader { get; protected set; }
     
     private void Awake()
     {

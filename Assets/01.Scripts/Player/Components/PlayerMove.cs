@@ -6,12 +6,13 @@ public class PlayerMove : MoveComponent
 {
     [Header("InputReader")]
     [SerializeField] private InputReader _input; // 인풋
-    public InputReader Input => _input;
 
     private int _lastDirection = 1;
 
     private void OnEnable() // InputReader 활성화 해주는 작업
     {
+        InputReader = _input;
+
         if (_input != null)
         {
             var playerInput = new Controls();

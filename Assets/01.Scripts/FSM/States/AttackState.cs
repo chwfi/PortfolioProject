@@ -18,13 +18,11 @@ public class AttackState : State
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsAttackEnd))
-            _stateMachine.ChangeState(StateTypeEnum.Idle);
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        _owner.MoveCompo.InputReader.Attack = false;
     }
 }

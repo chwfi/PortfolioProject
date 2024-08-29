@@ -8,6 +8,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerMapActions
 {
     public Vector2 MoveInput;
     public bool Attack;
+    public bool Roll;
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -18,7 +19,15 @@ public class InputReader : ScriptableObject, Controls.IPlayerMapActions
     {
         if (context.performed)
         {
-            Attack= true;
+            Attack = true;
+        }
+    }
+
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Roll = true;
         }
     }
 }

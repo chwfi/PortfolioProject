@@ -7,9 +7,10 @@ public enum ConditionTypeEnum
     IsInputMove,
     IsInputIdle,
     IsInputAttack,
-    IsAttackEnd,
+    None,
     IsTargetDetected,
     IsTargetNull,
+    IsInputRoll,
 }
 
 public abstract class TransitionCondition : ScriptableObject
