@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/TransitionCondition/Player_Move")]
-public class PlayerMoveCondition : TransitionCondition
+[CreateAssetMenu(menuName = "SO/TransitionCondition/Player/IsInputMove")]
+public class IsInputMove : TransitionCondition
 {
     private PlayerMove _playerMove => Owner.MoveCompo as PlayerMove;
 

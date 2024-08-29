@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class IdleState : State
 {
-    public IdleState(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName) : base(owner, stateMachine, condition, animName)
+    public IdleState(Entity owner, StateMachine stateMachine, string animName) : base(owner, stateMachine, animName)
     {
     }
 
     public override void EnterState()
     {
         base.EnterState();
-
-        _owner.ConditionDictionary.TryGetValue(ConditionTypeEnum.IdleToMove, out _condition);
 
         _owner.MoveCompo.StopImmediately();
     }
@@ -21,8 +19,14 @@ public class IdleState : State
     {
         base.UpdateState();
 
-        if (_condition.IsConditionValid())
-            _stateMachine.ChangeState(StateTypeEnum.Move);          
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputMove))
+            _stateMachine.ChangeState(StateTypeEnum.Move);     
+
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsTargetDetected))
+            _stateMachine.ChangeState(StateTypeEnum.Move);
+
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputAttack))
+            _stateMachine.ChangeState(StateTypeEnum.Attack);     
     }
 
     public override void ExitState()

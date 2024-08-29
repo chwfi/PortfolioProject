@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class MoveState : State
 {
-    public MoveState(Entity owner, StateMachine stateMachine, TransitionCondition condition, string animName) : base(owner, stateMachine, condition, animName)
+    public MoveState(Entity owner, StateMachine stateMachine, string animName) : base(owner, stateMachine, animName)
     {
     }
 
     public override void EnterState()
     {
         base.EnterState();
-
-        _owner.ConditionDictionary.TryGetValue(ConditionTypeEnum.MoveToIdle, out _condition);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_condition.IsConditionValid())
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputIdle))
             _stateMachine.ChangeState(StateTypeEnum.Idle);
+
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsTargetNull))
+            _stateMachine.ChangeState(StateTypeEnum.Idle);
+
+        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputAttack))
+            _stateMachine.ChangeState(StateTypeEnum.Attack);
     }
 
     public override void FixedUpdateState()

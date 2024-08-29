@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/TransitionCondition/Player_Stop")]
-public class PlayerStopCondition : TransitionCondition
+[CreateAssetMenu(menuName = "SO/TransitionCondition/Player/IsInputIdle")]
+public class IsInputIdle : TransitionCondition
 {
     private PlayerMove _playerMove => Owner.MoveCompo as PlayerMove;
 

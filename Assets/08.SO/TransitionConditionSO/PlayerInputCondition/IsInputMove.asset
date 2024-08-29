@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d21497023ef4f60854622366e08271, type: 3}
-  m_Name: EnemyMoveCondition
+  m_Script: {fileID: 11500000, guid: 3eda72fb600844214acea9d4b3e56300, type: 3}
+  m_Name: IsInputMove
   m_EditorClassIdentifier: 
-  _description: (Enemy) Idle To Move Condition
+  _description: "(\uD50C\uB808\uC774\uC5B4 \uC804\uC6A9) \uC6C0\uC9C1\uC784 \uC778\uD48B\uC774
+    \uAC10\uC9C0\uB418\uC5C8\uB294\uAC00?"
   ConditionType: 0

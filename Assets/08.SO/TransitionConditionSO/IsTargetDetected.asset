@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eda72fb600844214acea9d4b3e56300, type: 3}
-  m_Name: PlayerMoveCondition
+  m_Script: {fileID: 11500000, guid: 40d21497023ef4f60854622366e08271, type: 3}
+  m_Name: IsTargetDetected
   m_EditorClassIdentifier: 
-  _description: (Player) Idle To Move Condition
-  ConditionType: 0
+  _description: "\uD0C0\uAC9F\uC774 \uBC94\uC704 \uB0B4\uC5D0 \uB4E4\uC5B4\uC654\uB294\uAC00?"
+  ConditionType: 4

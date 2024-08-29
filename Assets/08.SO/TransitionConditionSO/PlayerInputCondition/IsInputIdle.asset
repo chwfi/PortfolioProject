@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23bb208dca35496b8192fdd636eedd4, type: 3}
-  m_Name: InputReader
+  m_Script: {fileID: 11500000, guid: 2cbefbb2857fa4631a2947c9ab6b0396, type: 3}
+  m_Name: IsInputIdle
   m_EditorClassIdentifier: 
-  MoveInput: {x: 0, y: 0}
-  Attack: 0
+  _description: "(\uD50C\uB808\uC774\uC5B4 \uC804\uC6A9) \uC6C0\uC9C1\uC784 \uC778\uD48B\uC774
+    \uAC10\uC9C0\uB418\uC9C0 \uC54A\uB294\uAC00?"
+  ConditionType: 1

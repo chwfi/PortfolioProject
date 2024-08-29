@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/TransitionCondition/Enemy_Stop")]
-public class EnemyStopCondition : TransitionCondition
+[CreateAssetMenu(menuName = "SO/TransitionCondition/IsTargetNull")]
+public class IsTargetNull : TransitionCondition
 {
     public override bool IsConditionValid()
     {

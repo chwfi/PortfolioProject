@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4932053f517498aa504ea4521e3d26, type: 3}
+  m_Name: IsInputAttack
+  m_EditorClassIdentifier: 
+  _description: "(\uD50C\uB808\uC774\uC5B4 \uC804\uC6A9) Attack \uC778\uD48B\uC774
+    \uAC10\uC9C0\uB418\uC5C8\uB294\uAC00?"
+  ConditionType: 2
+  attackActionReference:
+    m_Name: Attack Action Reference
+    m_Id: a19c6e95-84a3-4f6c-858d-587e6c79129b
+    m_Asset: {fileID: 0}
+    m_Actions:
+    - m_Name: New action
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 85d6a3b6-843c-44c0-bad3-1069e9570c9a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: 
+      m_Id: 80414ff1-820b-42d5-87dc-2ff4347331ae
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: New action
+      m_Flags: 0

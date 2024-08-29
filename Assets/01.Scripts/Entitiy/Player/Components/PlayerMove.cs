@@ -6,7 +6,6 @@ public class PlayerMove : MoveComponent
 {
     [Header("InputReader")]
     [SerializeField] private InputReader _input; // 인풋
-
     public InputReader Input => _input;
 
     private int _lastDirection = 1;
