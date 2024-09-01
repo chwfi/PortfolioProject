@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public enum SkillTypeEnum
 {
@@ -24,6 +25,15 @@ public class SkillManager
     public Skill GetSkill(SkillTypeEnum skillType)
     {
         SkillDictionary.TryGetValue(skillType, out Skill value);
-        return value;
+        if (!value.Available)
+            return null;
+        else
+            return value;
+    }
+
+    public void ManageSkill(Skill skill)
+    {
+        skill.Available = false;
+        CoroutineUtil.CallWaitForSeconds(skill.Cooldown, () => skill.Available = true);
     }
 }

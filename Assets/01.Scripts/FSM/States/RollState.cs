@@ -11,8 +11,10 @@ public class RollState : State
     public override void EnterState()
     {
         base.EnterState();
-
-        _owner.SkillManagerCompo.GetSkill(SkillTypeEnum.Roll).PlaySkill();
+        
+        var skill = _owner.SkillManagerCompo.GetSkill(SkillTypeEnum.Roll);
+        skill.PlaySkill();
+        //_owner.SkillManagerCompo.ManageSkill(skill); 
     }
 
     public override void FixedUpdateState()
@@ -23,7 +25,5 @@ public class RollState : State
     public override void ExitState()
     {
         base.ExitState();
-        
-        _owner.MoveCompo.InputReader.Roll = false;
     }
 }

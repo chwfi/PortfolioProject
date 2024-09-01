@@ -7,6 +7,10 @@ public class IsInputRoll : TransitionCondition
 {
     public override bool IsConditionValid()
     {
-        return Owner.MoveCompo.InputReader.Roll;
+        var skill = Owner.SkillManagerCompo.GetSkill(SkillTypeEnum.Roll);
+        if (skill != null)
+            return Owner.MoveCompo.InputReader.Roll;
+        else
+            return false;
     }
 }

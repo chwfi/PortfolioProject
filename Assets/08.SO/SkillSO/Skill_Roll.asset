@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillType: 0
   _coolDown: 3
-  CanUseSkill: 1
+  Available: 1
   _rollSpeed: 6

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 [CreateAssetMenu(menuName = "SO/Skill/RollSkill", fileName = "Skill_")]
 public class RollSkill : Skill
@@ -10,6 +11,8 @@ public class RollSkill : Skill
 
     public override void PlaySkill()
     {
+        if (!Available) return;
+
         Vector2 rollDirection = _owner.MoveCompo.InputReader.MoveInput.normalized;
 
         // MoveInput이 Vector2.zero일 때, 현재 바라보는 방향으로 설정
@@ -22,5 +25,8 @@ public class RollSkill : Skill
         }
 
         _owner.MoveCompo.RigidbodyCompo.velocity = rollDirection * _rollSpeed;
+
+        Available = false;
+        CoroutineUtil.CallWaitForSeconds(_coolDown, () => Available = true);
     }
 }

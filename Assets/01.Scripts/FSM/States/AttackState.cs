@@ -23,6 +23,5 @@ public class AttackState : State
     public override void ExitState()
     {
         base.ExitState();
-        _owner.MoveCompo.InputReader.Attack = false;
     }
 }
