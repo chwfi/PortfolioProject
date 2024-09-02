@@ -31,10 +31,4 @@ public class SkillManager
         else
             return value;
     }
-
-    public void ManageSkill(Skill skill)
-    {
-        skill.Available = false;
-        CoroutineUtil.CallWaitForSeconds(skill.Cooldown, () => skill.Available = true);
-    }
 }

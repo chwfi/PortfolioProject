@@ -17,17 +17,9 @@ public class MoveState : State
     {
         base.UpdateState();
 
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputIdle))
-            _stateMachine.ChangeState(StateTypeEnum.Idle);
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsTargetNull))
-            _stateMachine.ChangeState(StateTypeEnum.Idle);
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputAttack))
-            _stateMachine.ChangeState(StateTypeEnum.Attack);
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputRoll))
-            _stateMachine.ChangeState(StateTypeEnum.Roll);
+        _owner.IsConditionsValid(StateTypeEnum.Idle);
+        _owner.IsConditionsValid(StateTypeEnum.Attack);
+        _owner.IsConditionsValid(StateTypeEnum.Roll);
     }
 
     public override void FixedUpdateState()

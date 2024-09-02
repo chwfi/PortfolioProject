@@ -15,3 +15,4 @@ MonoBehaviour:
   _description: "(\uD50C\uB808\uC774\uC5B4 \uC804\uC6A9) \uC6C0\uC9C1\uC784 \uC778\uD48B\uC774
     \uAC10\uC9C0\uB418\uC5C8\uB294\uAC00?"
   ConditionType: 0
+  TargetStateType: 1

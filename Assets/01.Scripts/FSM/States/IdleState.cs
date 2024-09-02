@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class IdleState : State
 {
@@ -19,20 +20,9 @@ public class IdleState : State
     {
         base.UpdateState();
 
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputMove))
-            _stateMachine.ChangeState(StateTypeEnum.Move);     
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsTargetDetected))
-            _stateMachine.ChangeState(StateTypeEnum.Move);
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputAttack))
-            _stateMachine.ChangeState(StateTypeEnum.Attack);    
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsInputRoll))
-            _stateMachine.ChangeState(StateTypeEnum.Roll);
-
-        if (_owner.GetConditionValid(ConditionTypeEnum.IsTargetEnter))
-            _stateMachine.ChangeState(StateTypeEnum.Attack);
+        _owner.IsConditionsValid(StateTypeEnum.Move);
+        _owner.IsConditionsValid(StateTypeEnum.Attack);
+        _owner.IsConditionsValid(StateTypeEnum.Roll);
     }
 
     public override void ExitState()

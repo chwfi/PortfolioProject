@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill_Attack_Player
   m_EditorClassIdentifier: 
   _skillType: 1
-  _coolDown: 1.2
+  _coolDown: 0.3
   Available: 1
   _attackRadius: 1.2
   _attackDamage: 5

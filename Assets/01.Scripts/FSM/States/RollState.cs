@@ -14,7 +14,6 @@ public class RollState : State
         
         var skill = _owner.SkillManagerCompo.GetSkill(SkillTypeEnum.Roll);
         skill.PlaySkill();
-        //_owner.SkillManagerCompo.ManageSkill(skill); 
     }
 
     public override void FixedUpdateState()
