@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillType: 1
   _coolDown: 1
-  Available: 1
-  _attackRadius: 1.2
+  Available: 0
+  _attackRadius: 0.75
   _attackDamage: 5
   _maxAttackableCount: 1
   _layer:

@@ -42,6 +42,11 @@ public class PlayerMove : MoveComponent
 
     public override void ApplyKnockback(Transform subject)
     {
-        throw new System.NotImplementedException();
+        Transform subjectTrm = subject;
+        Vector2 knockbackDirection = (_owner.transform.position - subjectTrm.position).normalized;
+
+        Vector2 knockback = knockbackDirection * _knockbackForce;
+        knockback.y += _upwardForce;
+        _owner.MoveCompo.RigidbodyCompo.AddForce(knockback, ForceMode2D.Impulse);
     }
 }

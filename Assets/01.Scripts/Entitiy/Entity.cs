@@ -58,7 +58,7 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
         }
     }
 
-    private void SetTransitionConditions() // 인스펙터에서 넣어준 TransitionConditon들을 딕셔너리에 넣어주는 함수
+    protected void SetTransitionConditions() // 인스펙터에서 넣어준 TransitionConditon들을 딕셔너리에 넣어주는 함수
     {
         if (_conditions.Length == 0) // TransitionCondition 배열에 아무것도 없다면 리턴
             return;
@@ -69,12 +69,13 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
 
         foreach (var condition in _conditions) // TransitionCondition 배열을 반복 돌리고
         {
-            condition.Owner = this; // 일단 들어온 condition에 오너를 세팅해줌
-            if (!ConditionDictionary.ContainsKey(condition.TargetStateType)) // condition의 TargetStateType이 키값으로 딕셔너리에 존재하지 않을때,
-                ConditionDictionary[condition.TargetStateType] = new List<TransitionCondition>(); 
+            var newCondition = condition.Clone();
+            newCondition.Owner = this; // 일단 들어온 condition에 오너를 세팅해줌
+            if (!ConditionDictionary.ContainsKey(newCondition.TargetStateType)) // condition의 TargetStateType이 키값으로 딕셔너리에 존재하지 않을때,
+                ConditionDictionary[newCondition.TargetStateType] = new List<TransitionCondition>(); 
                 // 딕셔너리에 새로운 리스트를 만들어 밸류로 넣어줌
 
-            ConditionDictionary[condition.TargetStateType].Add(condition); 
+            ConditionDictionary[newCondition.TargetStateType].Add(newCondition); 
             // 딕셔너리에 존재한다면 condition을 리스트에 추가해줌
         }
     }
@@ -116,7 +117,7 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
         foreach (var condition in conditions) // 있다면 그 리스트를 반복해
         {
             if (condition.IsConditionValid()) // 조건 리스트 중 만족되는 조건이 있는지 확인한다.
-                StateMachineCompo.ChangeState(stateType); // 조건 하나라도 만족된다면 목표 스테이트 타입으로 이동.
+                this.StateMachineCompo.ChangeState(stateType); // 조건 하나라도 만족된다면 목표 스테이트 타입으로 이동.
         }
 
         // 사용 예: IdleState에서 MoveState로 가는 TransitionCondition들을 모두 가져와 확인하고 싶을 때
