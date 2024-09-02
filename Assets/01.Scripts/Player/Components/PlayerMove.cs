@@ -39,4 +39,9 @@ public class PlayerMove : MoveComponent
 
         transform.localScale = new Vector3(_lastDirection, 1, 1);
     }
+
+    public override void ApplyKnockback(Transform subject)
+    {
+        throw new System.NotImplementedException();
+    }
 }

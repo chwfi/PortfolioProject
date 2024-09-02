@@ -12,9 +12,7 @@ public class HitState : State
     {
         base.EnterState();
 
-        Transform targetTrm = _owner.TargetCompo.GetTarget().transform;
-        Vector2 knockbackDirection = (_owner.transform.position - targetTrm.position).normalized;
-        _owner.MoveCompo.ApplyKnockback(knockbackDirection);
+        _owner.MoveCompo.ApplyKnockback(_owner.HealthCompo.HitSubject);
     }
 
     public override void UpdateState()

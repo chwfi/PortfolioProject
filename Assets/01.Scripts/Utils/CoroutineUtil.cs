@@ -9,34 +9,39 @@ namespace Util
         private static GameObject _coroutineObj;
         private static CoroutineExecutor _coroutineExecutor;
 
-        static CoroutineUtil() //»ý¼ºÀÚ¿¡¼­ ÄÚ·çÆ¾À» ½ÇÇàÇØÁÖ±â À§ÇÑ ¸ð³ëºñÇìÀÌºñ¾î ¿ÀºêÁ§Æ®¸¦ »ý¼º
+        static CoroutineUtil() //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             _coroutineObj = new GameObject("CoroutineObj");
             _coroutineExecutor = _coroutineObj.AddComponent<CoroutineExecutor>();
         }
 
-        public static void CallWaitForOneFrame(Action action) //1ÇÁ·¹ÀÓ µÚ¿¡ ½ÇÇà
+        public static void CallWaitForOneFrame(Action action) //1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));
         }
 
-        public static void CallWaitForSeconds(float seconds, Action afterAction) //nÃÊ µÚ¿¡ ½ÇÇà
+        public static void CallWaitForSeconds(float seconds, Action afterAction) //nï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction));
         }
 
-        private static IEnumerator DoCallWaitForOneFrame(Action action) //¸Å°³º¯¼ö·Î ¹ÞÀº ActionÀ» ½ÇÇàÇØÁØ´Ù.
+        private static IEnumerator DoCallWaitForOneFrame(Action action) //ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Actionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
         {
             yield return null;
             action?.Invoke();
         }
 
-        private static IEnumerator DoCallWaitForSeconds(float seconds, Action afterAction) //¸Å°³º¯¼ö·Î ¹ÞÀº ActionÀ» secondsÃÊ ÈÄ¿¡ ½ÇÇàÇØÁØ´Ù.
+        private static IEnumerator DoCallWaitForSeconds(float seconds, Action afterAction) //ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Actionï¿½ï¿½ secondsï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
         {
             yield return new WaitForSeconds(seconds);
             afterAction?.Invoke();
         }
 
-        private class CoroutineExecutor : MonoBehaviour { } //ÄÚ·çÆ¾À» ½ÇÇàÇØÁÖ±â À§ÇÑ ¸ð³ëºñÇìÀÌºñ¾î¿ÀºêÁ§Æ®
+        public static void Callback<T>(Action<T> action)
+        {
+            CallWaitForOneFrame(() => action(default));
+        }
+
+        private class CoroutineExecutor : MonoBehaviour { } //ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     }
 }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skill_Attack_Goblin
   m_EditorClassIdentifier: 
   _skillType: 1
-  _coolDown: 1.2
-  Available: 0
+  _coolDown: 1
+  Available: 1
   _attackRadius: 1.2
   _attackDamage: 5
   _maxAttackableCount: 1

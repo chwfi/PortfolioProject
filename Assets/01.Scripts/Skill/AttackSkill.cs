@@ -27,7 +27,7 @@ public class AttackSkill : Skill
             var hit = result[i];
             if (hit.TryGetComponent(out IDamageable damageable))
             {
-                damageable.OnDamage(_attackDamage);
+                damageable.OnDamage(_attackDamage, _owner.transform);
             }
         }
 

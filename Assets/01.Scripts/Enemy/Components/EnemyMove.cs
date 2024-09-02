@@ -31,4 +31,14 @@ public class EnemyMove : MoveComponent
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
+
+    public override void ApplyKnockback(Transform subject)
+    {
+        Transform subjectTrm = subject;
+        Vector2 knockbackDirection = (_owner.transform.position - subjectTrm.position).normalized;
+
+        Vector2 knockback = knockbackDirection * _knockbackForce;
+        knockback.y += _upwardForce;
+        _owner.MoveCompo.RigidbodyCompo.AddForce(knockback, ForceMode2D.Impulse);
+    }
 }
