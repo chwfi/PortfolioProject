@@ -7,6 +7,7 @@ using Util;
 public enum SkillTypeEnum
 {
     Roll,
+    Attack,
 }
 
 public class SkillManager

@@ -26,6 +26,18 @@ public class EnemyTarget : TargetComponent
         return distance >= _stopRange && distance <= _detectRange;
     }
 
+    public override bool IsTargetEnter()
+    {  
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, _detectRange, _targetLayer);
+        
+        if (collider == null)
+            return false;
+
+        float distance = Vector2.Distance(transform.position, collider.transform.position);
+
+        // 최소 범위 안에 있다면 true 반환
+        return distance <= _stopRange;
+    }
 
     void OnDrawGizmosSelected()
     {

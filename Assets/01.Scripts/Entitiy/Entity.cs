@@ -11,13 +11,20 @@ public class Entity : MonoBehaviour
     public MoveComponent MoveCompo { get; private set; }
     public AttackComponent AttackCompo { get; private set; }
     public HealthComponent HealthCompo { get; private set; }
+    public SkillManager SkillManagerCompo { get; private set; }
     public TargetComponent TargetCompo { get; protected set; } // protect로 구현된 setter는 자식에서 할당한다는 것을 의미
-    public SkillManager SkillManagerCompo { get; protected set; }
     #endregion
+    
+    [Header("Transform")]
+    [SerializeField] private Transform _attackPos;
 
     [Header("Transition Conditions")]
     [SerializeField] private TransitionCondition[] _conditions;
 
+    [Header("Skills")]
+    [SerializeField] private List<Skill> _skillList;
+
+    public Transform AttackPos => _attackPos;
     public Dictionary<ConditionTypeEnum, TransitionCondition> ConditionDictionary { get; private set; }
 
     protected virtual void Awake() 
@@ -29,6 +36,10 @@ public class Entity : MonoBehaviour
         MoveCompo = transform.GetComponent<MoveComponent>();
         AttackCompo = transform.GetComponent<AttackComponent>();
         HealthCompo = transform.GetComponent<HealthComponent>();
+
+        SkillManagerCompo = new SkillManager();
+        if (_skillList.Count > 0)
+            SkillManagerCompo.RegisterSkills(this, _skillList);
 
         SetComponents();
         SetTransitionConditions();

@@ -10,4 +10,5 @@ public abstract class TargetComponent : BaseComponent
 
     public abstract Entity GetTarget();
     public abstract bool Targeting();
+    public abstract bool IsTargetEnter();
 }

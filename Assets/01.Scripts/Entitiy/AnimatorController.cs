@@ -14,7 +14,9 @@ public class AnimatorController : BaseComponent
 
     public void AnimationAttackTrigger() // 정확한 공격 애니메이션 시점에 공격 기능을 수행하기 위해, 애니메이션 이벤트에서 실행
     {
-        _owner.AttackCompo.OnAttack();
+        var skill = _owner.SkillManagerCompo.GetSkill(SkillTypeEnum.Attack);
+        if (skill != null)
+            skill.PlaySkill();
     }
 
     public void AnimationEndTrigger() // 애니메이션 이벤트에서 실행해주는 함수. 애니메이션 마지막 프레임에 실행된다

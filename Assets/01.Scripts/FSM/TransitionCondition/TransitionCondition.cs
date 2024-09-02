@@ -11,6 +11,7 @@ public enum ConditionTypeEnum
     IsTargetDetected,
     IsTargetNull,
     IsInputRoll,
+    IsTargetEnter,
 }
 
 public abstract class TransitionCondition : ScriptableObject
