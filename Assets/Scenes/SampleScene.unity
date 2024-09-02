@@ -562,6 +562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 2
+  _knockbackForce: 3
+  _upwardForce: 0.5
 --- !u!114 &136260696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,11 +576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab761829be90d4c639d24a1af03b94fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPos: {fileID: 1356652472}
   _conditions:
   - {fileID: 11400000, guid: 9463aef08d8144c69a153b308f0af773, type: 2}
   - {fileID: 11400000, guid: 153768b53a3cd448d965d5c9099a8e42, type: 2}
   - {fileID: 11400000, guid: e3053563a214f45149818224cb907e14, type: 2}
+  - {fileID: 11400000, guid: 60f335d1e8f6c4ce2ba07a82b6c9a92c, type: 2}
   _skillList:
   - {fileID: 11400000, guid: cc8aa8541e40749ba8de4ba49570edd6, type: 2}
 --- !u!114 &136260698
@@ -2521,7 +2523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9176759178f24d4d9aa89519ef35820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPos: {fileID: 452760305}
   _conditions:
   - {fileID: 11400000, guid: 87ea9e9180c174fc4953ddc488d38034, type: 2}
   - {fileID: 11400000, guid: 7028a2d81091b4a938fd49d0f92b87e5, type: 2}
@@ -2543,6 +2544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _knockbackForce: 10
+  _upwardForce: 5
   _input: {fileID: 11400000, guid: c9dfc61f1cf6544c2a31312ce0201040, type: 2}
 --- !u!70 &1168730729
 CapsuleCollider2D:
@@ -3353,7 +3356,7 @@ Transform:
   m_GameObject: {fileID: 356096817903172377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 1.45, z: 0}
+  m_LocalPosition: {x: 3.11, y: 1.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

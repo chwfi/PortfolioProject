@@ -23,6 +23,7 @@ public class IdleState : State
         _owner.IsConditionsValid(StateTypeEnum.Move);
         _owner.IsConditionsValid(StateTypeEnum.Attack);
         _owner.IsConditionsValid(StateTypeEnum.Roll);
+        _owner.IsConditionsValid(StateTypeEnum.Hit);
     }
 
     public override void ExitState()

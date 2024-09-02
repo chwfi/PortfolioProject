@@ -8,6 +8,7 @@ public enum StateTypeEnum
     Move,
     Attack,
     Roll,
+    Hit,
 }
 
 public class StateMachine

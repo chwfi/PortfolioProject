@@ -18,6 +18,8 @@ public class AttackState : State
     public override void UpdateState()
     {
         base.UpdateState();
+
+        _owner.IsConditionsValid(StateTypeEnum.Hit);
     }
 
     public override void ExitState()
