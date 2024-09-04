@@ -15,7 +15,13 @@ public class Enemy : Entity, ITargetObject
         TargetCompo = transform.GetComponent<TargetComponent>();
     }
 
-    public void DestroyObject()
+    public override void EntityDead()
+    {
+        base.EntityDead();
+        ReportObject();
+    }
+
+    public void ReportObject()
     {
         QuestSystem.Instance.Report(this, 1);
     }

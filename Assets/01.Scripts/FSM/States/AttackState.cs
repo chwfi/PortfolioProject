@@ -20,6 +20,7 @@ public class AttackState : State
         base.UpdateState();
 
         _owner.IsConditionsValid(StateTypeEnum.Hit);
+        _owner.IsConditionsValid(StateTypeEnum.Dead);
     }
 
     public override void ExitState()

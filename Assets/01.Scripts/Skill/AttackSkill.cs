@@ -20,7 +20,6 @@ public class AttackSkill : Skill
 
         Collider2D[] result = new Collider2D[_maxAttackableCount];
         int count = Physics2D.OverlapCircleNonAlloc(_owner.AttackPos.position, _attackRadius, result, _layer);
-        Debug.Log(count);
 
         for (int i = 0; i < count; i++)
         {

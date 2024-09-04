@@ -13,7 +13,7 @@ public class QuestDatabase : ScriptableObject
     [SerializeField] private List<Quest> _quests;
     public IReadOnlyList<Quest> Quests => _quests;
 
-    public Quest FindQuestBy(string codeName) => _quests.FirstOrDefault(x => x.CodeName == codeName);
+    public Quest FindQuestBy(int codeName) => _quests.FirstOrDefault(x => x.CodeName == codeName);
 
     #if UNITY_EDITOR
     [ContextMenu("FindQuests")]

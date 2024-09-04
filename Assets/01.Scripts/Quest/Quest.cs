@@ -23,7 +23,7 @@ public class Quest : ScriptableObject
     public delegate void UpdateUIHandler(Quest quest);
 
     [Header("Info")]
-    [SerializeField] private string _codeName;
+    [SerializeField] private int _codeName;
     [SerializeField] private string _questName;
     [SerializeField] private Sprite _questIcon;
     [SerializeField] private string _questDescription;
@@ -46,7 +46,11 @@ public class Quest : ScriptableObject
     public event UpdateUIHandler OnUIUpdate;
 
     public Task[] TaskGroup => _taskGroup;
-    public string CodeName => _codeName;
+    public int CodeName
+    {
+        get => _codeName;
+        set => _codeName = value;
+    }
     private QuestState _state;
     public QuestState State
     {

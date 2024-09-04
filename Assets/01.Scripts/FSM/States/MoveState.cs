@@ -21,6 +21,7 @@ public class MoveState : State
         _owner.IsConditionsValid(StateTypeEnum.Attack);
         _owner.IsConditionsValid(StateTypeEnum.Roll);
         _owner.IsConditionsValid(StateTypeEnum.Hit);
+        _owner.IsConditionsValid(StateTypeEnum.Dead);
     }
 
     public override void FixedUpdateState()

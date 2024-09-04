@@ -14,7 +14,7 @@ public class SkillManager
 {
     public Dictionary<SkillTypeEnum, Skill> SkillDictionary = new Dictionary<SkillTypeEnum, Skill>();
 
-    public void RegisterSkills(Entity owner, List<Skill> skills)
+    public void RegisterSkills(Entity owner, Skill[] skills)
     {
         foreach (var skill in skills)
         {

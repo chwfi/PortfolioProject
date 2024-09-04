@@ -1,6 +1,6 @@
 public struct QuestSaveData
 {
-    public string codeName;
+    public int codeName;
     public QuestState state;
     public TaskSaveData[] taskSaveData;
 }

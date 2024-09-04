@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf0bb7f0ce0046bd9b6be417ddd0197, type: 3}
   m_Name: Quest_Test_02
   m_EditorClassIdentifier: 
-  _codeName: Quest02
+  _codeName: 1
   _questName: Kill 10 Theifs
   _questIcon: {fileID: 0}
   _questDescription: Kill 10 Theifs

@@ -9,9 +9,10 @@ public abstract class TransitionCondition : ScriptableObject
 
     public Entity Owner { get; set; }
 
-    public TransitionCondition Clone()
+    public TransitionCondition OnRegister(Entity owner)
     {
         var clone = Instantiate(this);
+        clone.Owner = owner;
         return clone;
     }
 

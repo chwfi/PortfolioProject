@@ -9,6 +9,7 @@ public enum StateTypeEnum
     Attack,
     Roll,
     Hit,
+    Dead,
 }
 
 public class StateMachine

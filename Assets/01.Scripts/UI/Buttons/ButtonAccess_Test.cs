@@ -9,7 +9,7 @@ public class ButtonAccess_Test : UI_Button
 
     public override void SetButtonEvent()
     {
-        PopupUIController.Instance.GetPopupUI(_popupName).AccessUI(true);
+        PopupUIController.Instance.SetPopupUI(_popupName, true);
     }
 
     protected override void Awake()

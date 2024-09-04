@@ -6,6 +6,7 @@ using System.Linq;
 public class QuestBindingManager : MonoSingleton<QuestBindingManager>
 {
     private PopupUIController _questUIController;
+    private QuestRegisterer _questRegisterer;
     private List<QuestUI> _uiList = new();
 
     private void Awake() 
@@ -15,6 +16,7 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
         questSystem.OnQuestRegistered += SetQuestDictionary;
 
         _questUIController = FindObjectOfType<PopupUIController>();
+        _questRegisterer = FindObjectOfType<QuestRegisterer>();
         _uiList.AddRange(_questUIController.transform.GetComponentsInChildren<QuestUI>());
     }
 
@@ -26,6 +28,7 @@ public class QuestBindingManager : MonoSingleton<QuestBindingManager>
             {
                 quest.OnUISet += ui.SetUI;
                 quest.OnUIUpdate += ui.UpdateUI;
+                quest.OnCompleted += _questRegisterer.SetCurrentQuest;
             }
         }
     }

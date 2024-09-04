@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf0bb7f0ce0046bd9b6be417ddd0197, type: 3}
   m_Name: Quest_Test_01
   m_EditorClassIdentifier: 
-  _codeName: Quest
-  _questName: Kill 5 Goblins
+  _codeName: 0
+  _questName: "\uD018\uC2A4\uD2B8 01"
   _questIcon: {fileID: 0}
-  _questDescription: Kill them!!
+  _questDescription: "\uACE0\uBE14\uB9B0\uC744 5\uB9C8\uB9AC \uCC98\uCE58\uD558\uC138\uC694"
   _taskGroup:
   - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
   _rewards: []

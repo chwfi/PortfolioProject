@@ -16,3 +16,4 @@ MonoBehaviour:
   _coolDown: 3
   Available: 1
   _rollSpeed: 6
+  _rollTime: 0.5

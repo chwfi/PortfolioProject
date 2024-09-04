@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,12 @@ public class RollSkill : Skill
 {
     [Header("Stats")]
     [SerializeField] private float _rollSpeed;
+    [SerializeField] private float _rollTime;
 
     public override void PlaySkill()
     {
         if (!Available) return;
-
+        _owner.HealthCompo.Undamagable = true;
         Vector2 rollDirection = _owner.MoveCompo.InputReader.MoveInput.normalized;
 
         // MoveInput이 Vector2.zero일 때, 현재 바라보는 방향으로 설정
@@ -28,5 +30,6 @@ public class RollSkill : Skill
 
         Available = false;
         CoroutineUtil.CallWaitForSeconds(_coolDown, () => Available = true);
+        CoroutineUtil.CallWaitForSeconds(_rollTime, () => _owner.HealthCompo.Undamagable = false);
     }
 }

@@ -19,7 +19,7 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
     [SerializeField] private TransitionCondition[] _conditions; // 상태 전이 조건들
 
     [Header("Skills")]
-    [SerializeField] private List<Skill> _skillList;
+    [SerializeField] private Skill[] _skills;
 
     public Transform AttackPos { get; private set; } // 데미지를 입히는 로직이 실행되는 위치
     public Dictionary<StateTypeEnum, List<TransitionCondition>> ConditionDictionary { get; private set; }
@@ -69,7 +69,7 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
 
         foreach (var condition in _conditions) // TransitionCondition 배열을 반복 돌리고
         {
-            var newCondition = condition.Clone();
+            var newCondition = condition.OnRegister(this); // Entity끼리의 중복 방지를 위해 Clone을 생성
             newCondition.Owner = this; // 일단 들어온 condition에 오너를 세팅해줌
             if (!ConditionDictionary.ContainsKey(newCondition.TargetStateType)) // condition의 TargetStateType이 키값으로 딕셔너리에 존재하지 않을때,
                 ConditionDictionary[newCondition.TargetStateType] = new List<TransitionCondition>(); 
@@ -83,8 +83,8 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
     private void SetSkills() // 스킬을 관리하는 스킬매니저를 생성하고 _skillList에 있는 스킬들을 모두 등록
     {
         SkillManagerCompo = new SkillManager();
-        if (_skillList.Count > 0)
-            SkillManagerCompo.RegisterSkills(this, _skillList);
+        if (_skills.Length > 0)
+            SkillManagerCompo.RegisterSkills(this, _skills);
     }
 
     private void SetStates() // Reflection을 사용하여 런타임에 동적으로 State들에 접근해 추가해주는 로직
@@ -133,5 +133,11 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
     private void FixedUpdate() 
     {
         StateMachineCompo.CurrentState.FixedUpdateState();
+    }
+
+    public virtual void EntityDead() // 이 객체가 죽었을 때 실행할 로직들 여기서 처리
+    {
+        MoveCompo.StopImmediately();
+        MoveCompo.ColliderCompo.isTrigger = true;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
-public class QuestSystem : MonoSingleton<QuestSystem>
+public class  QuestSystem : MonoSingleton<QuestSystem>
 {
     #region SavePath
     private const string kCompletedAchievementsSavePath = "completedAchievements.json";

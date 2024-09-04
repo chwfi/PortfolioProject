@@ -18,8 +18,8 @@ public class PopupUIController : MonoSingleton<PopupUIController>
         }
     }
 
-    public UI_Popup GetPopupUI(string popupName)
+    public void SetPopupUI(string popupName, bool value)
     {
-        return PopupDictionary[popupName];
+        PopupDictionary[popupName].AccessUI(value);
     }
 }

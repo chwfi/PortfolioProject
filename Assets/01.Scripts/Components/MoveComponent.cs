@@ -12,11 +12,13 @@ public abstract class MoveComponent : BaseComponent
     [SerializeField] protected float _upwardForce = 5f; 
 
     public Rigidbody2D RigidbodyCompo { get; private set; }
+    public Collider2D ColliderCompo { get; private set; }
     public InputReader InputReader { get; protected set; }
     
     private void Awake()
     {
         RigidbodyCompo = transform.GetComponent<Rigidbody2D>();
+        ColliderCompo = transform.GetComponent<Collider2D>();
     }
 
     public void StopImmediately()
