@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 543a30888d8cc4fea9e001b837fb76b3, type: 3}
-  m_Name: Reward_Test
+  m_Name: Reward_Coin
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 0a38e31b2944c634dbc2d3f32d55188c, type: 3}
   _description: test
-  _quantity: 1
+  _quantity: 10

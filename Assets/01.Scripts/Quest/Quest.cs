@@ -90,8 +90,13 @@ public class Quest : ScriptableObject
             task.Start();
         }
 
-        _questUI = QuestBindingManager.Instance.SetUI(this);
-        SetUI();
+        OnRegisterUI();
+    }
+
+    public void OnRegisterUI() // 퀘스트에 맞는 UI 생성
+    {
+        _questUI = QuestBindingManager.Instance.SetUI(this); // 생성한걸 변수에 할당해줌
+        SetUI(); // 생성 후 바로 세팅해줌
     }
 
     public void OnReceieveReport(object target, int successCount)
@@ -127,7 +132,6 @@ public class Quest : ScriptableObject
         questSystem.OnQuestRecieved -= OnReceieveReport;
         questSystem.OnCheckCompleted -= OnCheckComplete;
         questSystem.OnUpdateQuestUI -= UpdateUI;
-        questSystem.OnSetQuestUI -= SetUI;
 
         OnCompleted = null;
         OnCanceled = null;
@@ -151,7 +155,6 @@ public class Quest : ScriptableObject
         questSystem.OnQuestRecieved += clone.OnReceieveReport;
         questSystem.OnCheckCompleted += clone.OnCheckComplete;
         questSystem.OnUpdateQuestUI += clone.UpdateUI;
-        questSystem.OnSetQuestUI += clone.SetUI;
 
         return clone;
     }

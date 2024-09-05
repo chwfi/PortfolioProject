@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1f542880ff143a586d2afb02af32c0, type: 3}
   m_Name: Task_Combat_Goblin
   m_EditorClassIdentifier: 
-  _description: Kill Goblin
+  _description: "\uACE0\uBE14\uB9B0\uC744 5\uB9C8\uB9AC \uCC98\uCE58\uD558\uC138\uC694"
   _taskTarget: {fileID: 11400000, guid: b9d42bc9d1f384417bf9327e17e0cd1b, type: 2}
   _initialSuccessValue: 0
   _needToSuccessValue: 5
-  IsComplete: 0

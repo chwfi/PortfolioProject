@@ -4,7 +4,7 @@ using UnityEngine;
 using Util;
 
 [CreateAssetMenu(menuName = "SO/Skill/AttackSkill", fileName = "Skill_")]
-public class AttackSkill : Skill
+public class AttackSkill : Skill // 기본 공격도 스킬로 빼기
 {
     [Header("Stat")]
     [SerializeField] protected float _attackRadius;

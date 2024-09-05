@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Quest_Test_01
   m_EditorClassIdentifier: 
   _codeName: 0
-  _questName: "\uD018\uC2A4\uD2B8 01"
+  _questName: "\uACE0\uBE14\uB9B0 \uC0AC\uB0E5"
   _questIcon: {fileID: 0}
   _questDescription: "\uACE0\uBE14\uB9B0\uC744 5\uB9C8\uB9AC \uCC98\uCE58\uD558\uC138\uC694"
   _taskGroup:
   - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
-  _rewards: []
+  _rewards:
+  - {fileID: 11400000, guid: 8594f6f1d1fcd425fa3a927cb7e7684b, type: 2}
   _isAutoStartQuest: 1
   _isAutoComplete: 1
   _isCanclable: 1
   _isSavable: 1
-  _questUI: {fileID: 784260457180267680, guid: 44c32bdbf257e4623ab73e940e98470c, type: 3}

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ITargetObject
 {
     public GameObject Object { get; }
-    public void ReportObject();
+    public void DestroyObject();
 }

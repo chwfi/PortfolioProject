@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c1b82c50ab3487ebbc793203338539, type: 3}
   m_Name: TaskTarget_Goblin
   m_EditorClassIdentifier: 
-  _target: {fileID: 451221801589653796, guid: 0cdb666ee9cb5483698b9c7c9b111422, type: 3}
+  _target: Goblin

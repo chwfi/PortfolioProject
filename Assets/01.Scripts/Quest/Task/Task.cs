@@ -30,6 +30,7 @@ public class Task : ScriptableObject
         get => _currentSuccessValue;
         set => _currentSuccessValue = value;
     }
+    public string Description => _description;
     public int NeedToSuccessValue => _needToSuccessValue;
     public TaskState TaskState => _taskState;
 
@@ -49,8 +50,8 @@ public class Task : ScriptableObject
     
     public void ReceieveReport(object target, int successCount, Quest quest)
     {
-        if (quest.CodeName != Owner.CodeName) return;
         if (!_taskTarget.IsTargetEqual(target)) return;
+        if (quest.CodeName != Owner.CodeName) return;
         if (TaskState == TaskState.Complete) return;
 
         _currentSuccessValue += successCount;
@@ -60,18 +61,5 @@ public class Task : ScriptableObject
         {
             _taskState = TaskState.Complete;
         }
-    }
-
-    public bool IsTargetEqual(object target)
-    {
-        if (_taskTarget.IsTargetEqual(target))
-            return true;
-        else
-            return false;
-    }
-
-    public void CompleteImmediately()
-    {
-        _currentSuccessValue = _needToSuccessValue;
     }
 }

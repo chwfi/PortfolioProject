@@ -15,12 +15,16 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
     public TargetComponent TargetCompo { get; protected set; } // protect로 구현된 setter는 자식에서 할당한다는 것을 의미
     #endregion
 
+    [Header("CodeName")]
+    [SerializeField] private string _codeName;
+
     [Header("Transition Conditions")]
     [SerializeField] private TransitionCondition[] _conditions; // 상태 전이 조건들
 
     [Header("Skills")]
     [SerializeField] private Skill[] _skills;
 
+    public string CodeName => _codeName;
     public Transform AttackPos { get; private set; } // 데미지를 입히는 로직이 실행되는 위치
     public Dictionary<StateTypeEnum, List<TransitionCondition>> ConditionDictionary { get; private set; }
     // 상태 전이 조건들을 목표 State에 따라 담는 딕셔너리

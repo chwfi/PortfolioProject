@@ -14,13 +14,11 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     #endregion
 
     #region Handlers
-    public delegate void QuestRegisteredHandler(Quest newQuest);
     public delegate void QuestCompletedHandler(Quest quest);
     public delegate void QuestCanceledHandler(Quest quest);
     public delegate void QuestRecieveHandler(object target, int successCount);
     public delegate void CheckCompleteHandler();
     public delegate void QuestUpdateUIHandler();
-    public delegate void QuestSetUIHandler();
     #endregion
 
     private List<Quest> _activeQuests = new();
@@ -32,17 +30,14 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     [SerializeField] private QuestDatabase _achievementDatabase;
 
     #region Events
-    public event QuestRegisteredHandler OnQuestRegistered;
     public event QuestCompletedHandler OnQuestCompleted;
     public event QuestCanceledHandler OnQuestCanceled;
 
-    public event QuestRegisteredHandler OnAchievementRegistered;
     public event QuestCompletedHandler OnAchievementCompleted;
 
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
     public event QuestUpdateUIHandler OnUpdateQuestUI;
-    public event QuestSetUIHandler OnSetQuestUI;
     #endregion
 
     public bool IsFileExist => File.Exists(SaveFilePath);
@@ -61,25 +56,12 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     {
         var newQuest = quest.Clone();
 
-        if (newQuest is Achievement)
-        {
-            newQuest.OnCompleted += SetAchievementCompleted;
+        newQuest.OnCompleted += SetQuestCompleted;
+        newQuest.OnCanceled += SetQuestCanceled;
 
-            _activeAchievements.Add(newQuest);
+        _activeQuests.Add(newQuest);
 
-            OnAchievementRegistered?.Invoke(newQuest);
-            newQuest.OnRegister();
-        }
-        else
-        {
-            newQuest.OnCompleted += SetQuestCompleted;
-            newQuest.OnCanceled += SetQuestCanceled;
-
-            _activeQuests.Add(newQuest);
-
-            OnQuestRegistered?.Invoke(newQuest);
-            newQuest.OnRegister();
-        }
+        newQuest.OnRegister();
 
         return newQuest;
     }
@@ -158,8 +140,9 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
 
     private void LoadCompleteQuest(QuestSaveData saveData, Quest quest)
     {
-        var newQuest = Register(quest);
+        var newQuest = quest.Clone();
         newQuest.LoadFrom(saveData);
+        newQuest.OnRegisterUI();
         OnUpdateQuestUI?.Invoke();
 
         if (newQuest is Achievement)

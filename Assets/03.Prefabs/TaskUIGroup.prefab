@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 543461687372191195}
   - component: {fileID: 4669398934206381302}
   m_Layer: 5
-  m_Name: TaskSuccessCount
+  m_Name: TaskUIGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e05118049464acfa7717ff71abdcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countText: {fileID: 4669398934206381302}
+  OwnTask: {fileID: 0}
+  OwnReward: {fileID: 0}
 --- !u!222 &543461687372191195
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -79,10 +80,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0 / 15
+  m_text: "\uACE0\uBE14\uB9B0\uC744 10\uB9C8\uB9AC \uCC98\uCE58\uD558\uC138\uC694 
+    0/15"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 53ac5080a88004f448d527ec7b3c1031, type: 2}
+  m_sharedMaterial: {fileID: 6610593313322731946, guid: 53ac5080a88004f448d527ec7b3c1031, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -106,14 +108,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -122,7 +124,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
