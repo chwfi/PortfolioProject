@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public enum QuestState
 {
@@ -42,8 +43,8 @@ public class Quest : ScriptableObject
 
     public event CompletedHandler OnCompleted;
     public event CanceldHandler OnCanceled;
-    public event SetUIHandler OnUISet;
-    public event UpdateUIHandler OnUIUpdate;
+    public event SetUIHandler OnSetUI;
+    public event UpdateUIHandler OnUpdateUI;
 
     public Task[] TaskGroup => _taskGroup;
     public int CodeName
@@ -58,7 +59,7 @@ public class Quest : ScriptableObject
         set
         {
             _state = value;
-            OnUpdateUI();
+            UpdateUI();
         }
     }
     public string QuestName => _questName;
@@ -74,9 +75,14 @@ public class Quest : ScriptableObject
     public virtual bool IsSavable => _isSavable;
     public bool IsAllTaskComplete => _taskGroup.All(x => x.IsComplete);
 
+    private QuestUI _questUI;
+
     public void OnRegister()
     {
         Debug.Assert(!IsRegistered, "This quest has already been registered"); //Assert 코드는 디버깅이지만 빌드를 하면 자동으로 삭제되어 유용하다.
+
+        if (_isAutoStartQuest)
+            State = QuestState.Active;    
 
         foreach (var task in _taskGroup)
         {
@@ -84,8 +90,8 @@ public class Quest : ScriptableObject
             task.Start();
         }
 
-        if (_isAutoStartQuest)
-            State = QuestState.Active;
+        _questUI = QuestBindingManager.Instance.SetUI(this);
+        SetUI();
     }
 
     public void OnReceieveReport(object target, int successCount)
@@ -95,6 +101,8 @@ public class Quest : ScriptableObject
 
         foreach (var task in _taskGroup)
             task.ReceieveReport(target, successCount, this);
+
+        State = QuestState.Active;
     }
 
     public void OnCheckComplete()
@@ -117,9 +125,9 @@ public class Quest : ScriptableObject
             reward.Give(this);
 
         questSystem.OnQuestRecieved -= OnReceieveReport;
-        questSystem.OnUpdateQuestUI -= OnUpdateUI;
-        questSystem.OnSetQuestUI -= OnSetUI;
         questSystem.OnCheckCompleted -= OnCheckComplete;
+        questSystem.OnUpdateQuestUI -= UpdateUI;
+        questSystem.OnSetQuestUI -= SetUI;
 
         OnCompleted = null;
         OnCanceled = null;
@@ -140,10 +148,10 @@ public class Quest : ScriptableObject
 
         var questSystem = QuestSystem.Instance;
         
-        questSystem.OnUpdateQuestUI += clone.OnUpdateUI;
-        questSystem.OnSetQuestUI += clone.OnSetUI;
         questSystem.OnQuestRecieved += clone.OnReceieveReport;
         questSystem.OnCheckCompleted += clone.OnCheckComplete;
+        questSystem.OnUpdateQuestUI += clone.UpdateUI;
+        questSystem.OnSetQuestUI += clone.SetUI;
 
         return clone;
     }
@@ -174,19 +182,20 @@ public class Quest : ScriptableObject
         }
     }
 
-    #region EventReciever
-    public void OnUpdateUI()
+    #region EventMethods
+    public void UpdateUI()
     {
-        OnUIUpdate?.Invoke(this);
+        if (_questUI == null) return;
+
+        OnUpdateUI?.Invoke(this);
     }
 
-    public void OnSetUI(Quest quest)
+    public void SetUI()
     {
-        if (quest.CodeName != this.CodeName)
-            return;
+        if (_questUI == null) return;
 
-        OnUISet?.Invoke(this);
-        OnUIUpdate?.Invoke(this);
+        OnSetUI?.Invoke(this);
+        OnUpdateUI?.Invoke(this);
     }
     #endregion
 }

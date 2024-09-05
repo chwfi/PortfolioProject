@@ -20,7 +20,7 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     public delegate void QuestRecieveHandler(object target, int successCount);
     public delegate void CheckCompleteHandler();
     public delegate void QuestUpdateUIHandler();
-    public delegate void QuestSetUIHandler(Quest quest);
+    public delegate void QuestSetUIHandler();
     #endregion
 
     private List<Quest> _activeQuests = new();
@@ -81,8 +81,6 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
             newQuest.OnRegister();
         }
 
-        OnSetQuestUI?.Invoke(newQuest);
-        OnUpdateQuestUI?.Invoke();
         return newQuest;
     }
 
@@ -160,11 +158,9 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
 
     private void LoadCompleteQuest(QuestSaveData saveData, Quest quest)
     {
-        var newQuest = quest.Clone();
-        OnQuestRegistered?.Invoke(newQuest);
-        //newQuest.OnRegister();
+        var newQuest = Register(quest);
         newQuest.LoadFrom(saveData);
-        OnSetQuestUI?.Invoke(newQuest);
+        OnUpdateQuestUI?.Invoke();
 
         if (newQuest is Achievement)
             _completedAchievements.Add(newQuest);

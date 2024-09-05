@@ -23,3 +23,4 @@ MonoBehaviour:
   _isAutoComplete: 1
   _isCanclable: 1
   _isSavable: 1
+  _questUI: {fileID: 784260457180267680, guid: 44c32bdbf257e4623ab73e940e98470c, type: 3}

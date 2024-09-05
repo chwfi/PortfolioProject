@@ -9,8 +9,9 @@ public abstract class QuestUI : UI_Popup
     [SerializeField] protected int _codename;
     [SerializeField] protected TextMeshProUGUI _questNameText;
     [SerializeField] protected TextMeshProUGUI _questDescriptionText;
-    [SerializeField] protected TextMeshProUGUI _questStateText;
     [SerializeField] protected TaskSuccessCountText _taskSuccessCountText;
+    [SerializeField] protected GameObject _completedPanel;
+
     protected Transform _countGroupTrm;
 
     public int CodeName => _codename;

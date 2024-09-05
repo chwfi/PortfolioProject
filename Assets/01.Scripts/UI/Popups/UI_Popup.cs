@@ -6,9 +6,12 @@ using Util;
 
 public abstract class UI_Popup : UI_Base // 창 UI(PopupUI)들의 부모가 되는 클래스
 {
-    [Header("UI_Fade")]
+    [Header("FadeValue")]
     [SerializeField] private float _fadeDealy = 0f; // UI가 켜질때 바로 켜지지 않고 딜레이를 줄것인가
     [SerializeField] private float _fadeTime; // UI가 켜지거나 꺼질 때 몇초동안 페이드를 줄것인가
+
+    [Header("Option")]
+    [SerializeField] private bool _activeOnStart; // 시작했을 때 켜줄것인가
 
     protected CanvasGroup _canvasGroup; // 팝업 UI는 캔버스 그룹으로 관리한다
     protected List<UI_Button> _buttonList = new(); // UI에 달려있는 버튼들의 리스트
@@ -26,7 +29,8 @@ public abstract class UI_Popup : UI_Base // 창 UI(PopupUI)들의 부모가 되�
             _buttonList.AddRange(buttons);
         }
 
-        AccessUI(false); // 시작하면 UI 꺼줌
+        if (!_activeOnStart)
+            AccessUI(false); // 시작하면 UI 꺼줌
     }
 
     public virtual void AccessUI(bool active) // UI에 접근하여 키거나 끌 수 있는 함수

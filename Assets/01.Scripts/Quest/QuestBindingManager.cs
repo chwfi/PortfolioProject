@@ -5,31 +5,14 @@ using System.Linq;
 
 public class QuestBindingManager : MonoSingleton<QuestBindingManager>
 {
-    private PopupUIController _questUIController;
-    private QuestRegisterer _questRegisterer;
-    private List<QuestUI> _uiList = new();
+    [SerializeField] private QuestUI _prefab;
+    [SerializeField] private Transform _createTransform;
 
-    private void Awake() 
+    public QuestUI SetUI(Quest quest)
     {
-        var questSystem = QuestSystem.Instance;
-
-        questSystem.OnQuestRegistered += SetQuestDictionary;
-
-        _questUIController = FindObjectOfType<PopupUIController>();
-        _questRegisterer = FindObjectOfType<QuestRegisterer>();
-        _uiList.AddRange(_questUIController.transform.GetComponentsInChildren<QuestUI>());
-    }
-
-    private void SetQuestDictionary(Quest quest) 
-    {
-        foreach (var ui in _uiList)
-        {
-            if (ui.CodeName == quest.CodeName)
-            {
-                quest.OnUISet += ui.SetUI;
-                quest.OnUIUpdate += ui.UpdateUI;
-                quest.OnCompleted += _questRegisterer.SetCurrentQuest;
-            }
-        }
+        var clone = Instantiate(_prefab, _createTransform);
+        quest.OnSetUI += clone.SetUI;
+        quest.OnUpdateUI += clone.UpdateUI;
+        return clone;
     }
 }
