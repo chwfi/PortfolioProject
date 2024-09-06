@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnboundedRewardGroup : MonoBehaviour
+public class UnboundedRewardGroup : MonoBehaviour // Quest UI 중 보상 텍스트들을 관리해주는 스크립트
 {
     private TextMeshProUGUI _rewardText;
     private Image _rewardIcon;  

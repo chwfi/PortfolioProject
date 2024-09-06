@@ -23,17 +23,13 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
 
     private List<Quest> _activeQuests = new();
     private List<Quest> _completedQuests = new();
-    private List<Quest> _activeAchievements = new();
-    private List<Quest> _completedAchievements = new();
 
     [SerializeField] private QuestDatabase _questDatabase;
-    [SerializeField] private QuestDatabase _achievementDatabase;
+    public QuestDatabase QuestDatabase => _questDatabase;
 
     #region Events
     public event QuestCompletedHandler OnQuestCompleted;
     public event QuestCanceledHandler OnQuestCanceled;
-
-    public event QuestCompletedHandler OnAchievementCompleted;
 
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
@@ -79,8 +75,6 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
         {
             { "activeQuests", CreateSaveDatas(_activeQuests) },
             { "completedQuests", CreateSaveDatas(_completedQuests) },
-            { "activeAchievements", CreateSaveDatas(_activeAchievements) },
-            { "completedAchievements", CreateSaveDatas(_completedAchievements) }
         };
 
         File.WriteAllText(SaveFilePath, root.ToString());
@@ -96,8 +90,6 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
 
             LoadSaveDatas(root["activeQuests"], _questDatabase, LoadActiveQuest);
             LoadSaveDatas(root["completedQuests"], _questDatabase, LoadCompleteQuest);
-            LoadSaveDatas(root["activeAchievements"], _achievementDatabase, LoadActiveQuest);
-            LoadSaveDatas(root["completedAchievements"], _achievementDatabase, LoadCompleteQuest);
 
             Debug.Log("Data loaded from JSON file.");
             return true;
@@ -145,10 +137,7 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
         newQuest.OnRegisterUI();
         OnUpdateQuestUI?.Invoke();
 
-        if (newQuest is Achievement)
-            _completedAchievements.Add(newQuest);
-        else
-            _completedQuests.Add(newQuest);
+        _completedQuests.Add(newQuest);
     }
 
 
@@ -171,14 +160,6 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
         OnQuestCanceled?.Invoke(quest);
 
         Destroy(quest, Time.deltaTime);
-    }
-
-    private void SetAchievementCompleted(Quest achievement)
-    {
-        _activeAchievements.Remove(achievement);
-        _completedAchievements.Add(achievement); // Completed List로 이동
-
-        OnAchievementCompleted?.Invoke(achievement);
     }
     #endregion
 }

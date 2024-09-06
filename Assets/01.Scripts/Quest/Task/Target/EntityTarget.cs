@@ -11,7 +11,7 @@ public class EntityTarget : TaskTarget
 
     public override bool IsTargetEqual(object target)
     {
-        var targetObject = target as Entity; // ITargetObject로 변환
+        var targetObject = target as Entity; // Entity로 변환
         if (targetObject.CodeName == _target)
             return true;
         else

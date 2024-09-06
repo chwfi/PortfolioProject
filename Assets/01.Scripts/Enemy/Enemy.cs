@@ -5,8 +5,6 @@ using UnityEngine;
 public class Enemy : Entity, ITargetObject
 {
     public PlayerController Target { get; protected set; }
-  
-    public GameObject Object => this.gameObject;
 
     protected override void Awake()
     {
@@ -18,7 +16,6 @@ public class Enemy : Entity, ITargetObject
     public override void EntityDead()
     {
         base.EntityDead();
-        Debug.Log(Object.name);
         DestroyObject();
     }
 

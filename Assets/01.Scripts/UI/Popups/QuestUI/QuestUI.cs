@@ -1,13 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class QuestUI : UI_Popup
+public class QuestUI : UI_Popup
 {
     [Header("Texts")]
-    [SerializeField] protected int _codename;
     [SerializeField] protected TextMeshProUGUI _questNameText;
     [SerializeField] protected UnboundedTaskGroup _taskPrefab;
     [SerializeField] protected UnboundedRewardGroup _rewardPrefab;
@@ -16,17 +13,62 @@ public abstract class QuestUI : UI_Popup
     protected Transform _taskGroupTrm;
     protected Transform _rewardGroupTrm;
 
-    public int CodeName => _codename;
+    private List<UnboundedTaskGroup> _taskTexts = new();
+    private List<UnboundedRewardGroup> _rewardTexts = new();
 
     public override void Awake()
     {
         base.Awake();
-
-        _taskGroupTrm = transform.Find("TaskLayoutGroup").transform;
-        _rewardGroupTrm = transform.Find("RewardPanel/RewardLayoutGroup").transform;
     }
 
-    public abstract void SetUI(Quest binder);
+    public override void AccessUI(bool active)
+    {
+        base.AccessUI(active);
+    }
 
-    public abstract void UpdateUI(Quest binder);
+    public void SetUI(Quest binder)
+    {
+        AccessUI(true);
+
+        if (binder.State == QuestState.Complete)
+        {
+            _completedPanel.SetActive(true);
+            return;
+        }
+
+        foreach (var task in binder.TaskGroup) // 작업들을 생성해서 UI에 불러옴. 여러개일 수도 있으므로 리스트로 하는것
+        {
+            UnboundedTaskGroup group = Instantiate(_taskPrefab, _taskGroupTrm);
+            group.OwnTask = task;
+            _taskTexts.Add(group);
+        }      
+
+        foreach (var reward in binder.Rewards) // 리워드 UI에 띄우는것. 이것도 위 로직과같음
+        {
+            UnboundedRewardGroup group = Instantiate(_rewardPrefab, _rewardGroupTrm);
+            group.OwnReward = reward;
+            _rewardTexts.Add(group);
+        }
+    }
+
+    public void UpdateUI(Quest binder)
+    {
+        if (binder.State == QuestState.Complete)
+        {  
+            transform.SetAsLastSibling();
+            _completedPanel.SetActive(true);
+        }
+
+        foreach (var txt in _taskTexts)
+        {
+            txt.UpdateText();
+        }
+        
+        foreach (var txt in _rewardTexts)
+        {
+            txt.UpdateText();
+        }
+
+        _questNameText.text = binder.QuestName;
+    }
 }

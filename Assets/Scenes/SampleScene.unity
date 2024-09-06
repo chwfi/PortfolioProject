@@ -1151,9 +1151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67959f24cbac746a4bf629d223f8667a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quests:
-  - {fileID: 11400000, guid: 59518f41e9afa4893b063ac187d35295, type: 2}
-  - {fileID: 11400000, guid: 266308459eb76428bb7cfaa84e1e80fc, type: 2}
 --- !u!1 &836691898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,7 +1332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _questDatabase: {fileID: 11400000, guid: 6d564724ffc6b4883b292d9a23b778f8, type: 2}
-  _achievementDatabase: {fileID: 11400000, guid: 12688e1bdcb60441fbd4402cf018bfc3, type: 2}
 --- !u!1001 &858519040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1426,7 +1422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8e884f2e38e403883371af38be11fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 784260457180267680, guid: 44c32bdbf257e4623ab73e940e98470c, type: 3}
+  _prefab: {fileID: 416542364528212803, guid: 44c32bdbf257e4623ab73e940e98470c, type: 3}
   _createTransform: {fileID: 2089280044}
 --- !u!4 &888702685
 Transform:

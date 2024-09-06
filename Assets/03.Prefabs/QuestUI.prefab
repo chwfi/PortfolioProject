@@ -552,7 +552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2381401481193977093}
-  - component: {fileID: 784260457180267680}
+  - component: {fileID: 416542364528212803}
   - component: {fileID: 5463783187669387902}
   - component: {fileID: 5059370339539831398}
   - component: {fileID: 8279624333977672878}
@@ -590,7 +590,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 314.117}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &784260457180267680
+--- !u!114 &416542364528212803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -599,14 +599,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4723217452567316990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58da7a32ff2f94bc5b2a0af8d5889833, type: 3}
+  m_Script: {fileID: 11500000, guid: 145125a1723454214be4e59663c90a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UIType: 0
   _fadeDealy: 0
   _fadeTime: 0
-  _activeOnStart: 1
-  _codename: 0
+  _activeOnStart: 0
   _questNameText: {fileID: 79641021293357113}
   _taskPrefab: {fileID: 1975488045675086875, guid: 804d7611ea9bc4a3dba6a30d72de2617, type: 3}
   _rewardPrefab: {fileID: 8184698461304319566, guid: ed643d5a30a5841c190a786be2b7ff0a, type: 3}
