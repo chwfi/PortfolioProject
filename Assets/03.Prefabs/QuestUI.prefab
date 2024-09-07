@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 8279624333977672878}
   - component: {fileID: 1251117762409766094}
   - component: {fileID: 2567868972197364175}
+  - component: {fileID: 94265194442188948}
   m_Layer: 5
   m_Name: QuestUI
   m_TagString: Untagged
@@ -602,7 +603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145125a1723454214be4e59663c90a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIType: 0
   _fadeDealy: 0
   _fadeTime: 0
   _activeOnStart: 0
@@ -719,6 +719,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &94265194442188948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4723217452567316990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &5415102982077771950
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,9 +766,9 @@ RectTransform:
   - {fileID: 5589962280584717323}
   m_Father: {fileID: 2381401481193977093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 810.99994, y: 157.05856}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1622, y: 314.117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5362208032920373288
@@ -779,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7176471}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
