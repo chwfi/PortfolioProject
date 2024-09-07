@@ -19,7 +19,8 @@ MonoBehaviour:
   _taskGroup:
   - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
   _rewards:
-  - {fileID: 11400000, guid: 8594f6f1d1fcd425fa3a927cb7e7684b, type: 2}
+  - {fileID: 11400000, guid: 6ec2b803b53e248389f61131ea84acf9, type: 2}
+  _rewardCount: 100
   _isAutoStartQuest: 1
   _isAutoComplete: 1
   _isCanclable: 1

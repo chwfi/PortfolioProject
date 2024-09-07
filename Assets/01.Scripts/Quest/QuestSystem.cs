@@ -46,6 +46,14 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     private void Start() 
     {
         Load();
+
+        if (!IsFileExist)
+        {
+            foreach (var quest in QuestDatabase.Quests)
+            {
+                Register(quest);
+            }
+        }
     }
 
     public Quest Register(Quest quest)

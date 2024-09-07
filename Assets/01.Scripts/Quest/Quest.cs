@@ -34,6 +34,7 @@ public class Quest : ScriptableObject
 
     [Header("Reward")]
     [SerializeField] private Reward[] _rewards;
+    [SerializeField] private int _rewardCount;
 
     [Header("Option")]
     [SerializeField] private bool _isAutoStartQuest;
@@ -47,6 +48,7 @@ public class Quest : ScriptableObject
     public event UpdateUIHandler OnUpdateUI;
 
     public Task[] TaskGroup => _taskGroup;
+    public int RewardCount => _rewardCount;
     public int CodeName
     {
         get => _codeName;
@@ -96,6 +98,7 @@ public class Quest : ScriptableObject
     public void OnRegisterUI() // 퀘스트에 맞는 UI 생성
     {
         _questUI = QuestBindingManager.Instance.SetUI(this); // 생성한걸 변수에 할당해줌
+        Debug.Log(_questUI);
         SetUI(); // 생성 후 바로 세팅해줌
     }
 

@@ -9,6 +9,7 @@ public class UnboundedRewardGroup : MonoBehaviour // Quest UI 중 보상 텍스�
     private TextMeshProUGUI _rewardText;
     private Image _rewardIcon;  
     public Reward OwnReward;
+    public Quest OwnQuest;
 
     private void OnEnable() 
     {
@@ -19,6 +20,6 @@ public class UnboundedRewardGroup : MonoBehaviour // Quest UI 중 보상 텍스�
     public void UpdateText()
     {
         _rewardIcon.sprite = OwnReward.Icon;
-        _rewardText.text = $"{OwnReward.Quantity}";
+        _rewardText.text = $"{OwnQuest.RewardCount}";
     }
 }

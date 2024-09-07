@@ -108,7 +108,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4723107735738678597, guid: 772dc8f4951da437db3f0eda3c71fd20, type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: 772dc8f4951da437db3f0eda3c71fd20,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab761829be90d4c639d24a1af03b94fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _codeName: Goblin
   _conditions:
   - {fileID: 11400000, guid: 9463aef08d8144c69a153b308f0af773, type: 2}
   - {fileID: 11400000, guid: 153768b53a3cd448d965d5c9099a8e42, type: 2}

@@ -19,6 +19,9 @@ public class QuestUI : UI_Popup
     public override void Awake()
     {
         base.Awake();
+
+        _taskGroupTrm = transform.Find("TaskLayoutGroup").transform;
+        _rewardGroupTrm = transform.Find("RewardPanel/RewardLayoutGroup").transform;
     }
 
     public override void AccessUI(bool active)
@@ -47,6 +50,7 @@ public class QuestUI : UI_Popup
         {
             UnboundedRewardGroup group = Instantiate(_rewardPrefab, _rewardGroupTrm);
             group.OwnReward = reward;
+            group.OwnQuest = binder;
             _rewardTexts.Add(group);
         }
     }
