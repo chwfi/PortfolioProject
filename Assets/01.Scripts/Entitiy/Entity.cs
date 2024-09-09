@@ -75,6 +75,7 @@ public class Entity : MonoBehaviour // 생명체의 근간이 되는 클래스
         {
             var newCondition = condition.OnRegister(this); // Entity끼리의 중복 방지를 위해 Clone을 생성
             newCondition.Owner = this; // 일단 들어온 condition에 오너를 세팅해줌
+            
             if (!ConditionDictionary.ContainsKey(newCondition.TargetStateType)) // condition의 TargetStateType이 키값으로 딕셔너리에 존재하지 않을때,
                 ConditionDictionary[newCondition.TargetStateType] = new List<TransitionCondition>(); 
                 // 딕셔너리에 새로운 리스트를 만들어 밸류로 넣어줌

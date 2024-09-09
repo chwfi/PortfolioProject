@@ -14,8 +14,6 @@ public class UnboundedTaskGroup : MonoBehaviour // Quest UI 중 작업 텍스트
 
     public void UpdateText()
     {
-        if (OwnTask.TaskState == TaskState.Complete) return;
-        
         _taskText.text = $"{OwnTask.Description}  {OwnTask.CurrentSuccessValue}/{OwnTask.NeedToSuccessValue}";
     }
 }

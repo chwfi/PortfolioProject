@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf0bb7f0ce0046bd9b6be417ddd0197, type: 3}
   m_Name: Quest_Test_03
   m_EditorClassIdentifier: 
-  _codeName: 2
-  _questName: "\uD14C\uC2A4\uD2B83"
+  _codeName: 3
+  _questName: "\uD14C\uC2A4\uD2B8 \uD018\uC2A4\uD2B8"
   _questIcon: {fileID: 0}
-  _questDescription: "\u314E\u3147"
+  _questDescription: "\uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
   _taskGroup:
-  - {fileID: 11400000, guid: 45dcbe2e6951f4f659a3e9a9743c622c, type: 2}
+  - {fileID: 11400000, guid: b0825c9021caf4630847f8623a9eb34e, type: 2}
   _rewards:
   - {fileID: 11400000, guid: 6ec2b803b53e248389f61131ea84acf9, type: 2}
-  _rewardCount: 100
+  _rewardCount: 50
   _isAutoStartQuest: 1
   _isAutoComplete: 1
   _isCanclable: 1

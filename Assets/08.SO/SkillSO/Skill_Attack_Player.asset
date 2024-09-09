@@ -16,7 +16,7 @@ MonoBehaviour:
   _coolDown: 0.3
   Available: 1
   _attackRadius: 0.52
-  _attackDamage: 25
+  _attackDamage: 15
   _maxAttackableCount: 3
   _layer:
     serializedVersion: 2

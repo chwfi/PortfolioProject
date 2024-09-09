@@ -73,8 +73,8 @@ public class  QuestSystem : MonoSingleton<QuestSystem>
     public void Report(object target, int successCount)
     {
         OnQuestRecieved?.Invoke(target, successCount);
-        OnCheckCompleted?.Invoke();
         OnUpdateQuestUI?.Invoke();
+        OnCheckCompleted?.Invoke();
     }
 
     private void Save()
