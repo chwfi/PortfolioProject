@@ -4,4 +4,6 @@
 
  핵심 로직으로는 FSM 시스템과 퀘스트 시스템, 그리고 UI 구조가 있습니다.
 
+ 사용한 디자인 패턴: 옵저버 패턴, 상태 패턴, 유한 상태 기계, 커맨드 패턴
+
 <img width="957" alt="스크린샷 2024-09-08 오전 1 28 30" src="https://github.com/user-attachments/assets/b47fc99a-e288-42a8-a6f4-b88d50fd0540">
